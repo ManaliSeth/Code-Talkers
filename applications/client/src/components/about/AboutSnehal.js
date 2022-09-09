@@ -8,38 +8,19 @@ function AboutSnehal() {
     <div className="profile-container">
       <div className="profile-parent">
         <div className="profile-details">
-          <div className="profile-details-colz">
-            <p>
-              {" "}
-              Email:{" "}
-              <a href="mailto:spatil2@mail.sfsu.edu" class="link-primary">
-                {" "}
-                spatil2@mail.sfsu.edu{" "}
-              </a>
-            </p>
-            <p>
-              {" "}
-              Github Username:{" "}
-              <a href="https://github.com/snehalp396" class="link-primary">
-                {" "}
-                snehalp396{" "}
-              </a>
-            </p>
-          </div>
 
           <div className="profile-details-name">
             <span className="primary-text">
-              {" "}
               Hello! I'M <span className="highlighted-text">Snehal Patil</span>
             </span>
           </div>
+
           <div className="profile-details-role">
             <span className="profile-role-tagline">
-              {" "}
-              Love building applications with frontend and backend operations.{" "}
+              Love building applications with frontend and backend operations.
             </span>
             <span className="profile-role-paragraph">
-              {" "}
+              
               I am a Computer Science Graduate student at San Francisco State
               University. I am currently in my 3rd semester, planning to
               graduate in May 2023. I have taken this course to get exposure to
@@ -48,11 +29,27 @@ function AboutSnehal() {
               different places, also I love playing Tennis!
             </span>
           </div>
-          <div className="profile-options">
+
+          <div className="profile-details-colz">
+            <p>
+              Email:
+              <a href="mailto:spatil2@mail.sfsu.edu" className="link-info">
+                spatil2@mail.sfsu.edu
+              </a>
+            </p>
+            <p>
+              Github Username:
+              <a href="https://github.com/snehalp396" className="link-info">
+                snehalp396
+              </a>
+            </p>
+          </div>
+
+          {/* <div className="profile-options">
             <a href="/AboutManali">
               <button className="btn highlighted-btn"> About Me! </button>
             </a>
-          </div>
+          </div> */}
         </div>
         <div className="profile-picture">
           <div className="profile-picture-background">
