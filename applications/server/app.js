@@ -32,7 +32,7 @@ app.use(cors({origin:true, credentials:true}));
 
 
 //port 
-const port = process.env.PORT || 8001;
+const port = process.env.PORT || 8080;
 
 //listener
 const server = app.listen(port, ()=> console.log(`Server is running on port ${port}`))
