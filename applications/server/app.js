@@ -9,7 +9,19 @@ require('dotenv').config();
 const app = express();
 
 //db
-
+const db = mongoose.connect(
+    `mongodb://admin:csc890team4@50.18.130.129:27017/csc890Team4`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    //   useFindAndModify: false,
+    },
+    (err) => {
+      if (err) return console.error(err);
+      console.log("connected to mongoDB");
+    }
+  );
+  
 
 //middleware
 
