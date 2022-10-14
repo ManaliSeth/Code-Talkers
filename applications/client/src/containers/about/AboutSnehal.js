@@ -1,7 +1,7 @@
 import React from "react";
 import "./AboutPage.css";
 import Image from "react-bootstrap/Image";
-import snehal from "../images/snehal.png";
+import snehal from "../../assets/About/snehal.png";
 
 function AboutSnehal() {
   return (
