@@ -1,7 +1,7 @@
 import React from "react";
 import "./AboutPage.css";
 import Image from "react-bootstrap/Image";
-import manali from "../images/manali.png";
+import manali from "../../assets/About/manali.png";
 function AboutManali() {
   return (
     <div className="profile-container">

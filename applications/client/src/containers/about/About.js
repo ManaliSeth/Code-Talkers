@@ -1,6 +1,6 @@
 import Image from "react-bootstrap/Image";
-import snehal from "../images/snehal.png";
-import manali from "../images/manali.png";
+import snehal from "../../assets/About/snehal.png";
+import manali from "../../assets/About/manali.png";
 import { Link } from "react-router-dom";
 import "./AboutPage.css";
 // import { Button } from "bootstrap";
