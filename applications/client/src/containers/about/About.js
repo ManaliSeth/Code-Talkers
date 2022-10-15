@@ -2,83 +2,63 @@ import Image from "react-bootstrap/Image";
 import snehal from "../../assets/About/snehal.png";
 import manali from "../../assets/About/manali.png";
 import { Link } from "react-router-dom";
-import "./AboutPage.css";
-// import { Button } from "bootstrap";
+import "../../index.css";
+import React from "react";
+import { Component } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 
-const About = () => {
-
-  // const onClick = () => {
-  //   console.log("Click");
-  // };
-
-  return (
-    <>
-      <div className="profile-container">
-        <div className="row text-white text-center">
-
-          <div className="col-md-6">
-            <div className="card-body">
-              <div className="row">
-                <Image src={snehal} width="380" height="380" alt="Snehal" />
-              </div>
-              <div className="row">
-                <h3> Snehal Patil </h3>
-                <p> Team Leader </p>
-                <p>
-                  Email:
-                  <a href="mailto:spatil2@mail.sfsu.edu" className="link-info">
-                    spatil2@mail.sfsu.edu
-                  </a>
-                </p>
-                <p>
-                  Github Username:
-                  <a href="https://github.com/snehalp396" className="link-info">
-                    snehalp396
-                  </a>
-                </p>
-              </div>
-              <div className="profile-options">
-                <Link to="/AboutSnehal">
-                  <button className="btn highlighted-btn"> About Me! </button>
-                  {/* <Button text='About me' onClick={() => aboutSnehal}  /> */}
-                </Link>
-              </div>
+class About extends Component {
+  render(){
+    return (
+      <div className="div-container" >
+        <Container>
+        <br/>
+            <div className="div-containerrow">
+              <h1> Connect with us!</h1>
+              <h5> Thank  you for visiting our website!</h5>
             </div>
-          </div>
-
-          <div className="col-md-6">
-            <div className="card-body">
-              <div className="row">
-                <Image src={manali} width="380" height="380" alt="Manali" />
-              </div>
-              <div className="row">
-                <h3> Manali Seth </h3>
-                <p> Github Master </p>
-                <p>
-                  Email:
-                  <a href="mailto:mseth@mail.sfsu.edu" className="link-info">
-                    mseth@mail.sfsu.edu
-                  </a>
-                </p>
-                <p>
-                  Github Username:
-                  <a href="https://github.com/ManaliSeth" className="link-info">
-                    Manali-Seth
-                  </a>
-                </p>
-              </div>
-              <div className="profile-options">
-                <Link to="/AboutManali">
-                  <button className="btn highlighted-btn"> About Me! </button>
-                  {/* <Button text='About me' onClick={()=> aboutManali}  /> */}
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+            <br />
+            <Row className="row-class">
+              <Col>
+                <div className="icon-picture">
+                  <Image src={snehal} alt="Image1" className="profile-picture-adjust"></Image>
+                </div>
+                <h2> Snehal Patil </h2>
+                <h4> Team Leader </h4>
+                <h5> Email: <a href="mailto:spatil2@mail.sfsu.edu" className="link-info"> spatil2@mail.sfsu.edu </a></h5>
+                <h5> Github Username: <a href="https://github.com/snehalp396" className="link-info"> snehalp396 </a></h5>
+                <br />
+                <div className="profile-options">
+                  <Link to="/AboutSnehal">
+                    <button className="btn highlighted-btn"><h4> About Me! </h4></button>
+                  </Link>
+                </div>  
+              </Col>
+              <Col>
+                <div className="icon-picture">
+                  <Image src={manali} alt="Image2" className="profile-picture-adjust"></Image>
+                </div>             
+                <h2> Manali Seth </h2>
+                <h4> Github Master </h4>
+                <h5> Email: <a href="mailto:mseth@mail.sfsu.edu" className="link-info"> mseth@mail.sfsu.edu </a></h5>
+                <h5> Github Username: <a href="https://github.com/ManaliSeth" className="link-info"> Manali-Seth </a></h5>
+                <br />
+                <div className="profile-options">
+                  <Link to="/AboutManali">
+                    <button className="btn highlighted-btn"><h4> About Me! </h4></button>
+                  </Link>
+                </div>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            </Container>
       </div>
-    </>
-  );
-};
+      
+);
+
+  }
+  
+}
 
 export default About;

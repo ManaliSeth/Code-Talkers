@@ -2,6 +2,7 @@ import React from 'react';
 import {Component} from 'react';
 import {Container, Form, Button, Card} from 'react-bootstrap';
 import { Col, Row } from "react-bootstrap";
+import "../../index.css";
 const {Configuration , OpenAIApi} = require("openai");
 class CodeToText extends Component {
   constructor(){
