@@ -2,7 +2,7 @@ import {Button, Card, Nav} from 'react-bootstrap';
 import React from 'react';
 import {Component} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../containers/home/Home.css";
+import "../index.css";
 class CardDisplay extends Component {
     render(){
         const {header, title, text, theLink} = this.props

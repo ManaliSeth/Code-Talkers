@@ -2,7 +2,7 @@ import Image from "react-bootstrap/Image";
 import snehal from "../../assets/About/snehal.png";
 import manali from "../../assets/About/manali.png";
 import { Link } from "react-router-dom";
-import "./AboutPage.css";
+import "../../index.css";
 import React from "react";
 import { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";

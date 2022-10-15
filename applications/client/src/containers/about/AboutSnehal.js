@@ -1,5 +1,5 @@
 import React from "react";
-import "./AboutPage.css";
+import "../../index.css";
 import Image from "react-bootstrap/Image";
 import snehal from "../../assets/About/snehal.png";
 import { Component } from "react";
