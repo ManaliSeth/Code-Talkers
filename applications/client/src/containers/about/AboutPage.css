@@ -1,16 +1,9 @@
 .profile-container{
-    padding-left: 10%;
-    padding-top: 10%;
-    padding-right: 10%;
-    padding-bottom: 20%;
+    background-color: rgb(94, 94, 94);
+}
 
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    height: max-content;
-    min-height: fit-content;
-    background-color: rgb(32, 20, 86);
+.row-class{
+    padding-left: 200px;
 }
 
 .profile-parent{
