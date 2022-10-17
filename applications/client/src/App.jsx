@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavbarComp from "./components/Navbar";
 import Home from "./containers/home/Home";
-import OpenAI from "./containers/openAI/OpenAI";
+import OpenAI from "./containers/openai/OpenAI";
 import About from "./containers/about/About";
 import Login from "./containers/account/Login";
 import Register from "./containers/account/Register";
