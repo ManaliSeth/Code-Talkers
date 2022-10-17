@@ -1,10 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import NavbarComp from "./components/includes/NavbarComp";
-import Home from "./components/home/Home";
-import About from "./components/about/About";
-import AboutSnehal from  "./components/about/AboutSnehal";
-import AboutManali from  "./components/about/AboutManali";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NavbarComp from "./components/Navbar";
+import Home from "./containers/home/Home";
+import OpenAI from "./containers/openai/OpenAI";
+import About from "./containers/about/About";
+import AboutSnehal from  "./containers/about/AboutSnehal";
+import AboutManali from  "./containers/about/AboutManali";
+import CodeTotext from "./containers/codeToText/CodeToText";
 
 function App() {
   return (
@@ -13,9 +15,11 @@ function App() {
       <NavbarComp/>
       <Routes>
         <Route path="/" element={<Home/>}></Route>
-        <Route path="/About" element={<About/>}></Route>
-        <Route path="/AboutSnehal" element={<AboutSnehal/>}></Route>
-        <Route path="/AboutManali" element={<AboutManali/>}></Route>
+        <Route path="/about" element={<About/>}></Route>
+        <Route path="/openAI" element={<OpenAI/>}></Route>
+        <Route path="/aboutSnehal" element={<AboutSnehal/>}></Route>
+        <Route path="/aboutManali" element={<AboutManali/>}></Route>
+        <Route path="/codeToText" element={<CodeTotext/>}></Route>
       </Routes>
     </Router>
 
