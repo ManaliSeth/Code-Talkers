@@ -25,7 +25,7 @@ class CodeToText extends Component {
     //OPENAI
 
     const configuration = new Configuration({
-      apiKey: '',
+      apiKey: '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',
     });
     const openai = new OpenAIApi(configuration);
 
