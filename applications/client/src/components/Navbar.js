@@ -19,9 +19,9 @@ class NavbarComp extends Component {
                   navbarScroll
                 >
                   <Nav.Link href="/"> Home </Nav.Link>
-                  <Nav.Link href="/openAI"> OpenAI </Nav.Link>
+                  <Nav.Link href="https://beta.openai.com/docs/introduction"> OpenAI </Nav.Link>
                   <Nav.Link href="/about"> About </Nav.Link>
-                  <Nav.Link href=""> Login </Nav.Link>
+                  <Nav.Link href="/login"> Login </Nav.Link>
                   
                 </Nav>
               </Navbar.Collapse>
