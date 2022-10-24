@@ -7,6 +7,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 class NavbarComp extends Component {
   render(){
+
+    // const handleLogout = () =>{
+    //   localStorage.removeItem("token");
+    //   window.location.reload();
+    // };
+
+
     return (
         <div>
           <Navbar bg="dark" variant="dark" sticky="top" expand="lg" CollapseOnSelect>
@@ -22,8 +29,11 @@ class NavbarComp extends Component {
                   <Nav.Link href="https://beta.openai.com/docs/introduction"> OpenAI </Nav.Link>
                   <Nav.Link href="/about"> About </Nav.Link>
                   <Nav.Link href="/login"> Login </Nav.Link>
-                  
+                  {/* <button onClick={handleLogout}>Logout</button> */}
                 </Nav>
+                {/* <button className="btn highlighted-btn" onClick={handleLogout}>
+                  Logout
+                </button> */}
               </Navbar.Collapse>
           </Navbar>
         </div>

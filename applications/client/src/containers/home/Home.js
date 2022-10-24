@@ -3,6 +3,7 @@ import image1 from "../../assets/Home/1.png";
 import image2 from "../../assets/Home/2.png";
 import image3 from "../../assets/Home/3.png";
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Component } from "react";
 import Card from "../../components/CardDisplay";
 import { Col, Row } from "react-bootstrap";

@@ -9,7 +9,7 @@ class CardDisplay extends Component {
         return (
             <div>
                 <Card style={{ height: '250px' }}>
-                <Card.Header as="h5" style={{ width: '460px'}}>{header}</Card.Header>
+                <Card.Header as="h5">{header}</Card.Header>
                 <Card.Body>
                     <Card.Title>{title}</Card.Title>
                     <Card.Text>
