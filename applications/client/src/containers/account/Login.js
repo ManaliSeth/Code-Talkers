@@ -71,26 +71,13 @@ const Login = () => {
                     Login
                   </button>
                 </form>
-                {/* <div className="form-group">
-                  <label htmlFor="email">Email: </label>
-                  <input type="text" name="email" placeholder="Enter email" />
-                </div>
 
-                <div className="form-group">
-                  <label htmlFor="password">Password: </label>
-                  <input type="password" name="password" placeholder="Enter password" />
-                </div> */}
 
               </div>
 
             </div>
 
             <div className="footer">
-              {/* <Link to="/">
-                <button type="button" className="btn highlighted-btn">
-                  Login
-                </button>
-              </Link> */}
 
               <p id="signUp"> Not yet registered? <Link to="/Register"> Sign up </Link></p>
 
