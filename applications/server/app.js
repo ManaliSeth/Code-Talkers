@@ -1,38 +1,33 @@
+require("dotenv").config();
+
 // imports modules
-const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const connection = require("./db");
+const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
+const morgan = require("morgan");
 
 //app
 const app = express();
 
-//db
-const db = mongoose.connect(
-    `mongodb://admin:csc890team4@50.18.130.129:27017/csc890Team4`,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    //   useFindAndModify: false,
-    },
-    (err) => {
-      if (err) return console.error(err);
-      console.log("connected to mongoDB");
-    }
-  );
-  
+// database connection
+connection();
 
 //middleware
 
-app.use(morgan('dev'))
-app.use(cors({origin:true, credentials:true}));
+// app.use(morgan('dev'))
+app.use(express.json());
+app.use(cors());
 
 //routes
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
-
-//port 
+//port
 const port = process.env.PORT || 8080;
 
 //listener
-const server = app.listen(port, ()=> console.log(`Server is running on port ${port}`))
+const server = app.listen(port, () =>
+  console.log(`Server is running on port ${port}`)
+);
