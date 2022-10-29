@@ -9,11 +9,11 @@ class NavbarComp extends Component {
     return (
       <div>
         <Navbar
+          collapseOnSelect
           bg="dark"
           variant="dark"
           sticky="top"
           expand="lg"
-          CollapseOnSelect
         >
           <Navbar.Brand href="/">
             <img src={logo} alt="logo1" width="50px" />
