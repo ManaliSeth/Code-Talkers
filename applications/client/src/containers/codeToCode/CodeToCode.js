@@ -54,12 +54,12 @@ export default class CodeToCode extends Component {
         openai.createCompletion({
         model: "code-davinci-002",
         prompt: `##### Translate this function from ${this.state.dropdownValue1} into ${this.state.dropdownValue2} \n ### ${this.state.dropdownValue1} \n\n ${formDataObj.query} \n ### ${this.state.dropdownValue2}`,
-        temperature: 0.1,
+        temperature: 0,
         max_tokens: 256,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
-        stop: ["\"\"\""],
+        stop: ["###"],
         }).then((response) =>{
             console.log(response);
             this.setState({
