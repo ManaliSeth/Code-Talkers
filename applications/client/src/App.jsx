@@ -8,7 +8,8 @@ import Login from "./containers/account/Login";
 import Register from "./containers/account/Register";
 import AboutSnehal from "./containers/about/AboutSnehal";
 import AboutManali from "./containers/about/AboutManali";
-import CodeTotext from "./containers/codeToText/CodeToText";
+import CodeToText from "./containers/codeToText/CodeToText";
+import TextToCode from "./containers/textToCode/TextToCode";
 import Main from "./containers/main/Main";
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
         <Route path="/openAI" element={<OpenAI />}></Route>
         <Route path="/aboutSnehal" element={<AboutSnehal />}></Route>
         <Route path="/aboutManali" element={<AboutManali />}></Route>
-        <Route path="/codeToText" element={<CodeTotext />}></Route>
+        <Route path="/codeToText" element={<CodeToText />}></Route>
+        <Route path="/textToCode" element={<TextToCode />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/" exact element={<Navigate replace to="/login" />}></Route>
