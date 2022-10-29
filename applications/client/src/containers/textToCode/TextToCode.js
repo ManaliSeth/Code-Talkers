@@ -1,59 +1,62 @@
 import React from 'react';
 import {Component} from 'react';
 import {Container, Form, Button, Card} from 'react-bootstrap';
-import Dropdown from '../../components/Dropdown';
 import { Col, Row } from "react-bootstrap";
 import "../../index.css";
 const {Configuration , OpenAIApi} = require("openai");
 
-export default class TextToCode extends Component {
+export default class CodeToCode extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
             heading: 'The response from the AI will be shown here',
             response: '....... await the response',
-            language: '',
+            dropdownValue: "Python"
         };
         
         this.handleDropdown = this.handleDropdown.bind(this);
     }
 
-    handleDropdown = (language) => {
-        this.setState({language});
-    };
 
-    onFormSubmit = e =>{
+    handleDropdown = event => {
+        this.setState({
+          dropdownValue: event.target.value
+        });
+      };
+
+    handleFormSubmit = e =>{
 
         e.preventDefault()
 
+        console.log("Chosen programming language:", this.state.dropdownValue);
+
         const formData = new FormData(e.target),
         formDataObj = Object.fromEntries(formData.entries());
-        console.log(formDataObj);
-        console.log(formDataObj.productName);
+        console.log(formDataObj.query)
 
         //OPENAI
 
         const configuration = new Configuration({
-        apiKey: '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',
+        apiKey: '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',
         });
         const openai = new OpenAIApi(configuration);
 
         openai.createCompletion({
         model: "code-davinci-002",
-        prompt: `${formDataObj.productName}\n\n\\"\\"\\"\nWrite a programming language code based on the given question:\n`,
-        temperature: 0.8,
+        prompt: `\n\n\\"\\"\\"\nWrite a ${this.state.dropdownValue} code to ${formDataObj.query}:\n`,
+        temperature: 0.1,
         max_tokens: 256,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
         stop: ["\"\"\""],
         }).then((response) =>{
-            console.log(response)
-       
+            console.log(response);
             this.setState({
                 heading: `AI Code Generation :`,
                 response: `${response.data.choices[0].text}`,
+                dropdownValue: `${this.state.dropdownValue}`,
             })
         });
     }
@@ -70,41 +73,46 @@ export default class TextToCode extends Component {
                     <br />
                     <br />
 
-                    <Dropdown
-                        data={[
-                            {value: 1, label: 'Python'},
-                            {value: 2, label: 'Java'},
-                            {value: 3, label: 'C++'},
-                        ]}
-                        value={this.state.language}
-                        placeholder='Select programming language'
-                        onChange={this.handleDropdown}  
-                    />
-                    <br />
-                    <br />
-                
-
                     <Row>
                     <Col>
-                        <Form onSubmit={this.onFormSubmit}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label> What code you want to generate? </Form.Label>
-                            <Form.Control as="textarea" name="productName" placeholder="Enter your query" rows={5}/>
-                            <Form.Text className="text-muted">
-                            Enter as much information as possible for more accurate code generation.
-                            </Form.Text>
-                        </Form.Group>
-                        <Button variant="primary" size="lg" type="submit">
-                            Get AI Suggestions
-                        </Button>
+                        <Form onSubmit={this.handleFormSubmit}>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label htmlFor="progLang">Select Programming language</Form.Label>
+                                <Form.Select
+                                    value={this.state.dropdownValue}
+                                    onChange={this.handleDropdown}
+                                    className="form-control"
+                                    id="progLang"
+                                    >
+                                    {/* <option value="noLangSelected">Select language</option> */}
+                                    <option value="Python">Python</option>
+                                    <option value="Java">Java</option>
+                                    <option value="C++">C++</option>
+                                </Form.Select>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label> Write your query to generate code </Form.Label>
+                                <Form.Control required as="textarea" name="query" placeholder="Enter your query" rows={5}/>
+                                <Form.Text className="text-muted">
+                                    Enter as much information as possible for more accurate code generation. By default it will generate code in Python
+                                </Form.Text>
+                            </Form.Group>
+
+                            <Button variant="primary" size="lg" type="submit">
+                                Get AI Suggestions
+                            </Button>
                         </Form>
                     </Col>  
                     </Row>
+
                     <br />
                     <br />
+
                     <Card>
                     <Card.Body>
-                        <Card.Title><h1>{this.state.heading}</h1></Card.Title>
+                        <Card.Title><h3>{this.state.dropdownValue} code</h3></Card.Title>
                         <br />
                         <Card.Text>
                         <h4>
@@ -112,7 +120,8 @@ export default class TextToCode extends Component {
                         </h4>
                         </Card.Text>
                     </Card.Body>
-                    </Card>          
+                    </Card>   
+
             </Container> 
         )
     }
