@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { User } = require("../models/user");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
+const authenticate = require("../middleware/authenticate");
 
 router.post("/", async (req, res) => {
   try {
@@ -44,5 +45,11 @@ const validate = (data) => {
 
   return schema.validate(data);
 };
+
+//code to Text page after login
+
+router.get("/codeToText", authenticate, (req, res) => {
+  res.send(req.rootUser);
+});
 
 module.exports = router;
