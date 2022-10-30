@@ -49,7 +49,20 @@ const validate = (data) => {
 //code to Text page after login
 
 router.get("/codeToText", authenticate, (req, res) => {
+  console.log(req.body);
   res.send(req.rootUser);
+});
+
+//get user data for feedback
+router.get("/getdata", authenticate, (req, res) => {
+  console.log("hello");
+  res.send(req.rootUser);
+});
+
+router.get("/logout", (req, res) => {
+  console.log(`Hello my logout page`);
+  res.clearCookie("jwttoken", { path: "/" });
+  res.status(200).send("User Logout");
 });
 
 module.exports = router;

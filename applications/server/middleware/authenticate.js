@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
-const authenticate = async (req, res, next) => {
+const Authenticate = async (req, res, next) => {
   try {
     const token = req.cookies.jwttoken;
     const verifyToken = jwt.verify(token, process.env.JWTPRIVATEKEY);
@@ -20,11 +20,11 @@ const authenticate = async (req, res, next) => {
     req.rootUser = rootUser;
     req.userID = rootUser._id;
 
-    return next();
+    next();
   } catch (error) {
     res.status(401).send("Unauthorized : No token provided");
     console.log(error);
   }
 };
 
-module.exports = authenticate;
+module.exports = Authenticate;
