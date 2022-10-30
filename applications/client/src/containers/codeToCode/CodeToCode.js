@@ -11,9 +11,9 @@ export default class CodeToCode extends Component {
         super(props);
         this.state = {
             heading: 'The response from the AI will be shown here',
-            response: '....... await the response',
+            response: '...wait for few seconds to generate code',
             dropdownValue1: "Python",
-            dropdownValue2: "Java"
+            dropdownValue2: "Java",
         };
         
         this.handleDropdown1 = this.handleDropdown1.bind(this);
@@ -37,8 +37,8 @@ export default class CodeToCode extends Component {
 
         e.preventDefault()
 
-        console.log("Chosen programming language:", this.state.dropdownValue1);
-        console.log("Chosen programming language:", this.state.dropdownValue2);
+        console.log("Chosen programming language to convert from:", this.state.dropdownValue1);
+        console.log("Chosen programming language to convert to:", this.state.dropdownValue2);
 
         const formData = new FormData(e.target),
         formDataObj = Object.fromEntries(formData.entries());
@@ -53,10 +53,12 @@ export default class CodeToCode extends Component {
 
         openai.createCompletion({
         model: "code-davinci-002",
-        prompt: `##### Translate this function from ${this.state.dropdownValue1} into ${this.state.dropdownValue2} \n ### ${this.state.dropdownValue1} \n\n ${formDataObj.query} \n ### ${this.state.dropdownValue2}`,
+        prompt: `##### Translate this function from ${this.state.dropdownValue1} into ${this.state.dropdownValue2} \n ### ${this.state.dropdownValue1} \n\n ${formDataObj.query} \n\n ### ${this.state.dropdownValue2}`,
         temperature: 0,
         max_tokens: 256,
         top_p: 1,
+        n: 1,
+        best_of: 2,
         frequency_penalty: 0,
         presence_penalty: 0,
         stop: ["###"],
@@ -65,9 +67,11 @@ export default class CodeToCode extends Component {
             this.setState({
                 heading: `AI Code Generation :`,
                 response: `${response.data.choices[0].text}`,
-                dropdownValue: `${this.state.dropdownValue1}`,
+                dropdownValue1: `${this.state.dropdownValue1}`,
+                dropdownValue2: `${this.state.dropdownValue2}`,
             })
         });
+        
     }
 
     render(){
@@ -150,7 +154,7 @@ export default class CodeToCode extends Component {
                         <br />
                         <Card.Text>
                         <h4>
-                            {this.state.response}
+                            <pre>{this.state.response}</pre>
                         </h4>
                         </Card.Text>
                     </Card.Body>
