@@ -11,7 +11,7 @@ export default class CodeToCode extends Component {
         super(props);
         this.state = {
             heading: 'The response from the AI will be shown here',
-            response: '....... await the response',
+            response: '...wait for few seconds to generate code',
             dropdownValue: "Python"
         };
         
@@ -48,6 +48,8 @@ export default class CodeToCode extends Component {
         temperature: 0.1,
         max_tokens: 256,
         top_p: 1,
+        n: 1,
+        best_of: 2,
         frequency_penalty: 0,
         presence_penalty: 0,
         stop: ["\"\"\""],
@@ -78,7 +80,7 @@ export default class CodeToCode extends Component {
                         <Form onSubmit={this.handleFormSubmit}>
 
                             <Form.Group className="mb-3">
-                                <Form.Label htmlFor="progLang">Select Programming language</Form.Label>
+                                <Form.Label htmlFor="progLang">Select Programming language to generate code in</Form.Label>
                                 <Form.Select
                                     value={this.state.dropdownValue}
                                     onChange={this.handleDropdown}
@@ -116,7 +118,7 @@ export default class CodeToCode extends Component {
                         <br />
                         <Card.Text>
                         <h4>
-                            {this.state.response}
+                            <pre>{this.state.response}</pre>
                         </h4>
                         </Card.Text>
                     </Card.Body>
