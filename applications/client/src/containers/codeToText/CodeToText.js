@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
@@ -7,80 +6,37 @@ import "../../index.css";
 const { Configuration, OpenAIApi } = require("openai");
 
 const CodeToText = () => {
-  // const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
 
-  // const userFeedback = async () => {
-  //   try {
-  //     const res = await fetch("/getdata", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include",
-  //     });
+  const callCodeToText = async () => {
+    try {
+      const res = await fetch("/api/auth/codeToText", {
+        method: "GET",
+        headers: {
+          Accept: "appllication/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+      // setUserData(data);
 
-  //     const data = await res.json();
-  //     console.log(data);
-  //     setUserData(data);
+      if (!res.status === 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log(error);
+      navigate("/login");
+    }
+  };
 
-  //     if (!res.status === 200) {
-  //       const error = new Error(res.error);
-  //       throw error;
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  useEffect(() => {
+    callCodeToText();
+  });
 
-  // useEffect(() => {
-  //   userFeedback();
-  // }, []);
-
-  // const callCodeToText = async () => {
-  //   try {
-  //     const res = await fetch("http://localhost:3000/codeToText");
-  //     console.log(res);
-  //   } catch (error) {
-  //     console.log(error);
-  //     // navigate("/login");
-  //   }
-  // };
-  // const navigate = useNavigate();
-
-  // const callCodeToText = async () => {
-  //   console.log("/codeToText");
-  //   try {
-  //     const res = await fetch("/about", {
-  //       method: "GET",
-  //       headers: {
-  //         Accept: "appllication/json",
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include",
-  //     });
-  //     console.log(res);
-  //     const data = await res.json();
-  //     console.log(data);
-
-  //     if (!res.status === 200) {
-  //       const error = new Error(res.error);
-  //       throw error;
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     navigate("/login");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   callCodeToText();
-  // }, []);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/codeToText")
-  //     .then((res) => console.log(res));
-  // }, []);
   const [response, setResponse] = useState("....... await the response");
 
   const onFormSubmit = (e) => {
@@ -165,6 +121,7 @@ const CodeToText = () => {
               <Form.Group className="mb-3">
                 <Form.Control
                   type="email"
+                  // value={userData.email}
                   placeholder="Your Email"
                   id="feedback_form_email"
                   className="feedback_form_email"
