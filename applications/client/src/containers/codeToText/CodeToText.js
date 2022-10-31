@@ -8,6 +8,12 @@ const { Configuration, OpenAIApi } = require("openai");
 const CodeToText = () => {
   const navigate = useNavigate();
 
+  const [userData, setUserData] = useState({
+    email: "",
+    question: "",
+    answer: "",
+    feedback: "",
+  });
   const callCodeToText = async () => {
     try {
       const res = await fetch("/api/auth/codeToText", {
@@ -70,6 +76,38 @@ const CodeToText = () => {
       });
   };
 
+  const handleInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const submitFeedback = async (e) => {
+    e.preventDefault();
+
+    const { email, question, answer, feedback } = userData;
+
+    const res = await fetch("/api/auth/CodeToText", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        question,
+        answer,
+        feedback,
+      }),
+    });
+    const data = await res.json();
+    if (!data) {
+      console.log("message not send");
+    } else {
+      alert("message send");
+      setUserData({ ...userData, feedback: "" });
+    }
+  };
   return (
     <Container>
       <br />
@@ -118,18 +156,33 @@ const CodeToText = () => {
         <div className="mb-3">
           <div className="form">
             <Form>
-              <Form.Group className="mb-3">
+              <Form.Group method="POST" className="mb-3">
                 <Form.Control
                   type="email"
-                  // value={userData.email}
+                  value={userData.email}
+                  onChange={handleInput}
                   placeholder="Your Email"
                   id="feedback_form_email"
+                  name="email"
                   className="feedback_form_email"
+                />
+                <Form.Label>Enter the question</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={userData.question}
+                  onChange={handleInput}
+                  name="question"
+                  placeholder="Question"
+                  className="feedback_form_question"
+                  rows={5}
+                  required
                 />
                 <Form.Label>Enter the output generated</Form.Label>
                 <Form.Control
                   as="textarea"
-                  name="feedback_form_answer"
+                  value={userData.answer}
+                  onChange={handleInput}
+                  name="answer"
                   placeholder="Answer Generated"
                   className="feedback_form_answer"
                   rows={5}
@@ -138,14 +191,21 @@ const CodeToText = () => {
                 <Form.Label>Enter your feedback</Form.Label>
                 <Form.Control
                   as="textarea"
-                  name="feedback_form_feedback"
+                  value={userData.feedback}
+                  onChange={handleInput}
+                  name="feedback"
                   placeholder="Answer Generated"
                   className="feedback_form_feedback"
                   rows={5}
                   required
                 />
               </Form.Group>
-              <Button variant="primary" size="lg" type="submit">
+              <Button
+                variant="primary"
+                size="lg"
+                type="submit"
+                onClick={submitFeedback}
+              >
                 Submit Feedback
               </Button>
             </Form>
