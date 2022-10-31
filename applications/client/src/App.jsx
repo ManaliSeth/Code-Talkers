@@ -10,6 +10,7 @@ import AboutSnehal from "./containers/about/AboutSnehal";
 import AboutManali from "./containers/about/AboutManali";
 import CodeToText from "./containers/codeToText/CodeToText";
 import TextToCode from "./containers/textToCode/TextToCode";
+import CodeToCode from "./containers/codeToCode/CodeToCode";
 import Main from "./containers/main/Main";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/aboutManali" element={<AboutManali />}></Route>
         <Route path="/codeToText" element={<CodeToText />}></Route>
         <Route path="/textToCode" element={<TextToCode />}></Route>
+        <Route path="/codeToCode" element={<CodeToCode />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/" exact element={<Navigate replace to="/login" />}></Route>
