@@ -16,29 +16,32 @@ import { createContext } from "react";
 import { useReducer } from "react";
 import { initialState, reducer } from "../src/reducer/UseReducer";
 export const UserContext = createContext();
-
+const Routing = () => {
+  return (
+    <Routes>
+      <Route exact path="/" element={<Home />}></Route>
+      <Route exact path="/about" element={<About />}></Route>
+      <Route exact path="/openAI" element={<OpenAI />}></Route>
+      <Route exact path="/aboutSnehal" element={<AboutSnehal />}></Route>
+      <Route exact path="/aboutManali" element={<AboutManali />}></Route>
+      <Route exact path="/codeToText" element={<CodeToText />}></Route>
+      <Route exact path="/feedback" element={<Feedback />}></Route>
+      <Route exact path="/login" element={<Login />}></Route>
+      <Route exact path="/register" element={<Register />}></Route>
+      <Route exact path="/logout" element={<Logout />}></Route>
+      <Route path="*" element={<ErrorPage />}></Route>
+    </Routes>
+  )
+}
 const App = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
 
     <Router>
-
       <UserContext.Provider value={{ state, dispatch }}>
         <NavbarComp />
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/about" element={<About />}></Route>
-          <Route exact path="/openAI" element={<OpenAI />}></Route>
-          <Route exact path="/aboutSnehal" element={<AboutSnehal />}></Route>
-          <Route exact path="/aboutManali" element={<AboutManali />}></Route>
-          <Route exact path="/codeToText" element={<CodeToText />}></Route>
-          <Route exact path="/feedback" element={<Feedback />}></Route>
-          <Route exact path="/login" element={<Login />}></Route>
-          <Route exact path="/register" element={<Register />}></Route>
-          <Route exact path="/logout" element={<Logout />}></Route>
-          <Route path="*" element={<ErrorPage />}></Route>
-        </Routes>
+        <Routing />
       </UserContext.Provider>
     </Router>
 

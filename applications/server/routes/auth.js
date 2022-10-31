@@ -60,4 +60,11 @@ router.get("/codeToText", authenticate, (req, res) => {
   res.send(req.rootUser);
 });
 
+// for logout
+router.get("/logout", async (req, res) => {
+  console.log(`Hello my logout page`);
+  res.clearCookie("jwttoken", { path: "/" });
+  res.status(200).send("User Logout");
+});
+
 module.exports = router;

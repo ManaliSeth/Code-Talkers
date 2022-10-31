@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-// import { UserContext } from "../../App";
+import { UserContext } from "../../App";
 const Logout = () => {
   const navigate = useNavigate();
-
+  const { state, dispatch } = useContext(UserContext);
   useEffect(() => {
     fetch("/api/auth/logout", {
       method: "GET",
@@ -14,7 +14,7 @@ const Logout = () => {
       credentials: "include",
     })
       .then((res) => {
-        // dispatch({ type: "USER", payload: false });
+        dispatch({ type: "USER", payload: false });
         navigate("/login", { replace: true });
         if (!res.status === 200) {
           const error = new Error(res.error);
@@ -25,11 +25,7 @@ const Logout = () => {
         console.log(err);
       });
   });
-  return (
-    <div>
-      <h1>Logout</h1>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Logout;

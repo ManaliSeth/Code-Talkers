@@ -2,8 +2,35 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/Home/logo192.png";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { UserContext } from "../App";
+import React, { useContext } from "react";
 
 const NavbarComp = () => {
+  const { state, dispatch } = useContext(UserContext);
+
+  const RenderMenu = () => {
+    if (state) {
+      return (
+        <>
+          <Nav.Link href="/"> Home </Nav.Link>
+          <Nav.Link href="/feedback"> Feedback </Nav.Link>
+          <Nav.Link href="/about"> About </Nav.Link>
+          <Nav.Link href="/logout"> Logout </Nav.Link>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Nav.Link href="/"> Home </Nav.Link>
+          <Nav.Link href="/feedback"> Feedback </Nav.Link>
+          <Nav.Link href="/about"> About </Nav.Link>
+          <Nav.Link href="/login"> Login </Nav.Link>
+          <Nav.Link href="/register"> Register </Nav.Link>
+        </>
+      );
+    }
+  };
+
   return (
     <div>
       <Navbar
@@ -24,13 +51,13 @@ const NavbarComp = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            {/* <RenderMenu /> */}
-            <Nav.Link href="/"> Home </Nav.Link>
+            <RenderMenu />
+            {/* <Nav.Link href="/"> Home </Nav.Link>
             <Nav.Link href="/feedback"> Feedback </Nav.Link>
             <Nav.Link href="/about"> About </Nav.Link>
             <Nav.Link href="/login"> Login </Nav.Link>
             <Nav.Link href="/register"> Register </Nav.Link>
-            <Nav.Link href="/logout"> Logout </Nav.Link>
+            <Nav.Link href="/logout"> Logout </Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
