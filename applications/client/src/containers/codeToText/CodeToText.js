@@ -102,9 +102,9 @@ const CodeToText = () => {
     });
     const data = await res.json();
     if (!data) {
-      console.log("message not send");
+      console.log("Feedback not send");
     } else {
-      alert("message send");
+      alert("FeedBack sent successfully");
       setUserData({
         ...userData,
         email: "",
