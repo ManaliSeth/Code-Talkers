@@ -26,6 +26,7 @@ const Login = () => {
     const data = res.json();
 
     if (res.status === 400 || !data) {
+      window.alert("Invalid Credentials");
       console.log("Invalid Credentials");
     } else {
       dispatch({ type: "USER", payload: true });

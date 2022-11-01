@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const Joi = require("joi");
-const passwordComplexity = require("joi-password-complexity");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
@@ -30,21 +29,14 @@ userSchema.methods.generateAuthToken = async function () {
   }
 };
 
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 12);
+  }
+  next();
+});
+
 //user model
-const User = mongoose.model("user", userSchema);
-
-const validate = (data) => {
-  const schema = Joi.object({
-    firstName: Joi.string().required().label("First Name"),
-    lastName: Joi.string().required().label("Last Name"),
-    userType: Joi.string().required().label("User Type"),
-    email: Joi.string().email().required().label("Email"),
-    password: passwordComplexity().required().label("Password"),
-  });
-
-  return schema.validate(data);
-};
-
-// module.exports = { User, validate };
+const User = mongoose.model("USER", userSchema);
 
 module.exports = User;
