@@ -57,7 +57,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-<<<<<<< HEAD
 userSchema.methods.addFeedback = async function (
   email,
   question,
@@ -77,10 +76,8 @@ userSchema.methods.addFeedback = async function (
     console.log(error);
   }
 };
-// module.exports = { User, validate };
-=======
+
 //user model
 const User = mongoose.model("USER", userSchema);
->>>>>>> CSC890-User
 
 module.exports = User;
