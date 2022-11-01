@@ -36,15 +36,17 @@ const CodeToText = () => {
     callCodeToText();
   });
 
-  const [response, setResponse] = useState("....... await the response");
+  const [response, setResponse] = useState(
+    "....... await the response, might take a few seconds!"
+  );
 
   const onFormSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target),
-        formDataObj = Object.fromEntries(formData.entries());;
+      formDataObj = Object.fromEntries(formData.entries());
 
-    console.log(formDataObj.productName);;
+    console.log(formDataObj.productName);
 
     //OPENAI
 
@@ -106,7 +108,7 @@ const CodeToText = () => {
         <Card.Body>
           <br />
           <Card.Text>
-            <h4>{response}</h4>
+            <pre>{response}</pre>
           </Card.Text>
         </Card.Body>
       </Card>
