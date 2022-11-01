@@ -67,4 +67,21 @@ router.get("/logout", async (req, res) => {
   res.status(200).send("User Logout");
 });
 
+//add feedback
+router.post("/codeToText", authenticate, async (req, res) => {
+  const { email, question, answer, feedback } = req.body;
+  if (!email || !question || !answer || !feedback) {
+    return res.status(422).json({ error: "Please fill the form" });
+  }
+  try {
+    const userFeedbackForm = await User.findOne({ _id: req.userID });
+    if (userFeedbackForm) {
+      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+
+      await userFeedbackForm.save();
+
+      res.status(201).json({ message: "user feedback successful" });
+    }
+  } catch (error) {}
+});
 module.exports = router;
