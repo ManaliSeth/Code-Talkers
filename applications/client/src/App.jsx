@@ -1,8 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavbarComp from "./components/Navbar";
 import Home from "./containers/home/Home";
-import OpenAI from "./containers/openai/OpenAI";
 import About from "./containers/about/About";
 import Login from "./containers/account/Login";
 import Register from "./containers/account/Register";
@@ -23,7 +22,6 @@ const Routing = () => {
     <Routes>
       <Route exact path="/" element={<Home />}></Route>
       <Route exact path="/about" element={<About />}></Route>
-      <Route exact path="/openAI" element={<OpenAI />}></Route>
       <Route exact path="/aboutSnehal" element={<AboutSnehal />}></Route>
       <Route exact path="/aboutManali" element={<AboutManali />}></Route>
       <Route exact path="/codeToText" element={<CodeToText />}></Route>
