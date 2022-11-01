@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useState } from "react";
 import React from "react";
 import Image from "react-bootstrap/Image";
 import accountImg from "../../assets/Account/account.svg";

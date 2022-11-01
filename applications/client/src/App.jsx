@@ -27,8 +27,8 @@ const Routing = () => {
       <Route exact path="/aboutSnehal" element={<AboutSnehal />}></Route>
       <Route exact path="/aboutManali" element={<AboutManali />}></Route>
       <Route exact path="/codeToText" element={<CodeToText />}></Route>
-      <Route path="/textToCode" element={<TextToCode />}></Route>
-      <Route path="/codeToCode" element={<CodeToCode />}></Route>
+      <Route exact path="/textToCode" element={<TextToCode />}></Route>
+      <Route exact path="/codeToCode" element={<CodeToCode />}></Route>
       <Route exact path="/feedback" element={<Feedback />}></Route>
       <Route exact path="/login" element={<Login />}></Route>
       <Route exact path="/register" element={<Register />}></Route>
