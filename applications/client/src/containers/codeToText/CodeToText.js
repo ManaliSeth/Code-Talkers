@@ -42,9 +42,9 @@ const CodeToText = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target),
-      formDataObj = Object.fromEntries(formData.entries());
+        formDataObj = Object.fromEntries(formData.entries());;
 
-    console.log(formDataObj.productName);
+    console.log(formDataObj.productName);;
 
     //OPENAI
 
