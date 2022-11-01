@@ -5,12 +5,14 @@ import accountImg from "../../assets/Account/account.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./account.css";
+import { Form } from "react-bootstrap";
 
 const Register = () => {
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    userType: "",
     password: "",
   });
 
@@ -23,7 +25,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8080/api/users";
+      const url = "/api/users";
       const { data: res } = await axios.post(url, data);
       navigate("/login");
       console.log(res.message);
@@ -55,7 +57,7 @@ const Register = () => {
                 onChange={handleChange}
                 value={data.firstName}
                 required
-                className="input"
+                className="form-control"
               />
               <input
                 type="text"
@@ -64,7 +66,7 @@ const Register = () => {
                 onChange={handleChange}
                 value={data.lastName}
                 required
-                className="input"
+                className="form-control"
               />
               <input
                 type="email"
@@ -73,7 +75,7 @@ const Register = () => {
                 onChange={handleChange}
                 value={data.email}
                 required
-                className="input"
+                className="form-control"
               />
               <input
                 type="password"
@@ -82,14 +84,25 @@ const Register = () => {
                 onChange={handleChange}
                 value={data.password}
                 required
-                className="input"
+                className="form-control"
               />
-              {/* <Form.Select aria-label="Default select example">
-        <option>Open this select menu</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </Form.Select> */}
+              <Form.Label>Select User Type</Form.Label>
+              <select
+                className="form-select"
+                name="userType"
+                id="userType"
+                onChange={handleChange}
+                value={data.userType}
+                required
+                autoFocus
+              >
+                <option value="">Select One</option>
+                <option>Student</option>
+                <option>Professor</option>
+                <option>Employee</option>
+              </select>
+
+              <br />
               {error && <div className="error_message">{error}</div>}
               <button type="submit" className="btn highlighted-btn">
                 Register
@@ -109,3 +122,4 @@ const Register = () => {
 };
 
 export default Register;
+

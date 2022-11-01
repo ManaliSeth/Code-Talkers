@@ -1,19 +1,46 @@
-import React from "react";
-import { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "../../index.css";
 const { Configuration, OpenAIApi } = require("openai");
-class CodeToText extends Component {
-  constructor() {
-    super();
-    this.state = {
-      heading: "The response from the AI will be shown here",
-      response: "....... await the response",
-    };
-  }
 
-  onFormSubmit = (e) => {
+const CodeToText = () => {
+  const navigate = useNavigate();
+
+  const callCodeToText = async () => {
+    try {
+      const res = await fetch("/api/auth/codeToText", {
+        method: "GET",
+        headers: {
+          Accept: "appllication/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.status === 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log(error);
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    callCodeToText();
+  });
+
+  const [response, setResponse] = useState(
+    "....... await the response, might take a few seconds!"
+  );
+
+  const onFormSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target),
@@ -24,7 +51,7 @@ class CodeToText extends Component {
     //OPENAI
 
     const configuration = new Configuration({
-      apiKey: "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",
+      apiKey: process.env.REACT_APP_OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
 
@@ -40,74 +67,94 @@ class CodeToText extends Component {
         stop: ['"""'],
       })
       .then((response) => {
-        // let str = `${response.data.choices[0].text}`
-        // console.log(str.length);
-        // var array1 = []
-        // let str1 = ""
-        // for(let i = 0; i < str.length ;i++)
-        // {
-        //   str1 += str[i];
-        //   if(str[i] === '.')
-        //   {
-        //     array1.push(str1);
-        //     str1 = "";
-        //   }
-
-        // }
-        this.setState({
-          heading: `AI Code Explanation :`,
-          response: `${response.data.choices[0].text}`,
-        });
+        setResponse(response.data.choices[0].text);
       });
   };
 
-  render() {
-    return (
-      <Container>
-        <br />
-        <div className="div-containerrow">
-          <h1> Generate Explanation for your code</h1>
-          <h4> Enter code and display the result for it.</h4>
-        </div>
-        <br />
-        <Row>
-          <Col>
-            <Form onSubmit={this.onFormSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label> What Code you want to undertsand?</Form.Label>
+  return (
+    <Container>
+      <br />
+      <div className="div-containerrow">
+        <h1> Generate Explanation for your code</h1>
+        <h4> Enter code and display the result for it.</h4>
+      </div>
+      <br />
+      <Row>
+        <Col>
+          <Form onSubmit={onFormSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label> What Code you want to undertsand?</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="productName"
+                placeholder="Enter Code"
+                className="feedback_form_question"
+                rows={5}
+              />
+              <Form.Text className="text-muted">
+                Enter as much information as possible for more accurate
+                description.
+              </Form.Text>
+            </Form.Group>
+            <Button variant="primary" size="lg" type="submit">
+              Get AI Suggestions
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+      <br />
+      <br />
+      <Card>
+        <Card.Body>
+          <br />
+          <Card.Text>
+            <pre>{response}</pre>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+      <br />
+
+      <h1>User Feedback</h1>
+      <Row>
+        <div className="mb-3">
+          <div className="form">
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="email"
+                  // value={userData.email}
+                  placeholder="Your Email"
+                  id="feedback_form_email"
+                  className="feedback_form_email"
+                />
+                <Form.Label>Enter the output generated</Form.Label>
                 <Form.Control
                   as="textarea"
-                  name="productName"
-                  placeholder="Enter Code"
+                  name="feedback_form_answer"
+                  placeholder="Answer Generated"
+                  className="feedback_form_answer"
                   rows={5}
+                  required
                 />
-                <Form.Text className="text-muted">
-                  Enter as much information as possible for more accurate
-                  description.
-                </Form.Text>
+                <Form.Label>Enter your feedback</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="feedback_form_feedback"
+                  placeholder="Answer Generated"
+                  className="feedback_form_feedback"
+                  rows={5}
+                  required
+                />
               </Form.Group>
               <Button variant="primary" size="lg" type="submit">
-                Get AI Suggestions
+                Submit Feedback
               </Button>
             </Form>
-          </Col>
-        </Row>
-        <br />
-        <br />
-        <Card>
-          <Card.Body>
-            <Card.Title>
-              <h1>{this.state.heading}</h1>
-            </Card.Title>
-            <br />
-            <Card.Text>
-              <h4>{this.state.response}</h4>
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Container>
-    );
-  }
-}
+          </div>
+        </div>
+      </Row>
+    </Container>
+  );
+};
 
 export default CodeToText;
