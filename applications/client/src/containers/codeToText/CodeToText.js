@@ -42,7 +42,9 @@ const CodeToText = () => {
     callCodeToText();
   });
 
-  const [response, setResponse] = useState("....... await the response");
+  const [response, setResponse] = useState(
+    "....... await the response, might take a few seconds!"
+  );
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -152,7 +154,7 @@ const CodeToText = () => {
         <Card.Body>
           <br />
           <Card.Text>
-            <h4>{response}</h4>
+            <pre>{response}</pre>
           </Card.Text>
         </Card.Body>
       </Card>
@@ -172,6 +174,7 @@ const CodeToText = () => {
                   id="feedback_form_email"
                   name="email"
                   className="feedback_form_email"
+                  required
                 />
                 <Form.Label>Enter the question</Form.Label>
                 <Form.Control
@@ -201,7 +204,7 @@ const CodeToText = () => {
                   value={userData.feedback}
                   onChange={handleInput}
                   name="feedback"
-                  placeholder="Answer Generated"
+                  placeholder="Write your feedback"
                   className="feedback_form_feedback"
                   rows={5}
                   required

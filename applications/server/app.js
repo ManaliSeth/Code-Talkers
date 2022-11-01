@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+require("dotenv").config();
+
 // imports modules
 const express = require("express");
 const cors = require("cors");
