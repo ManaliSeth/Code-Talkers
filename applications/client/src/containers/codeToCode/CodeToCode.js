@@ -47,7 +47,7 @@ export default class CodeToCode extends Component {
         //OPENAI
 
         const configuration = new Configuration({
-        apiKey: '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',
+            apiKey: process.env.REACT_APP_OPENAI_API_KEY,
         });
         const openai = new OpenAIApi(configuration);
 
