@@ -7,7 +7,6 @@ const { Configuration, OpenAIApi } = require("openai");
 
 const CodeToText = () => {
   const navigate = useNavigate();
-
   const [userData, setUserData] = useState({
     email: "",
     question: "",
@@ -24,7 +23,6 @@ const CodeToText = () => {
         },
         credentials: "include",
       });
-      // console.log(res);
       const data = await res.json();
       console.log(data);
 
