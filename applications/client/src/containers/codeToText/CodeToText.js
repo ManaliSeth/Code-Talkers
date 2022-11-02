@@ -170,7 +170,7 @@ const CodeToText = () => {
                   type="email"
                   value={userData.email}
                   onChange={handleInput}
-                  placeholder="Your Email"
+                  placeholder="Your Registered Email"
                   id="feedback_form_email"
                   name="email"
                   className="feedback_form_email"
