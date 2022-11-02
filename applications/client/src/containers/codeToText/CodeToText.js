@@ -24,7 +24,6 @@ const CodeToText = () => {
         },
         credentials: "include",
       });
-      // console.log(res);
       const data = await res.json();
       console.log(data);
 
