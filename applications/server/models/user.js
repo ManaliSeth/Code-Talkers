@@ -8,6 +8,27 @@ const userSchema = new mongoose.Schema({
   userType: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+  feedbacks: [
+    {
+      email: {
+        type: String,
+        required: true,
+      },
+      question: {
+        type: String,
+        required: true,
+      },
+      answer: {
+        type: String,
+        required: true,
+      },
+      feedback: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   tokens: [
     {
       token: {
@@ -35,6 +56,27 @@ userSchema.pre("save", async function (next) {
   }
   next();
 });
+
+//store data
+userSchema.methods.addFeedback = async function (
+  email,
+  question,
+  answer,
+  feedback
+) {
+  try {
+    this.feedbacks = this.feedbacks.concat({
+      email,
+      question,
+      answer,
+      feedback,
+    });
+    await this.save();
+    return this.feedbacks;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 //user model
 const User = mongoose.model("USER", userSchema);
