@@ -79,15 +79,40 @@ router.post("/codeToText", authenticate, async (req, res) => {
 
 
 // Text to Code page after login
-
 router.get("/textToCode", authenticate, (req, res) => {
   console.log("After authenticate");
   console.log(req.body);
   res.send(req.rootUser);
 });
 
-//Text to Code add feedback
+// Text to Code add feedback
 router.post("/textToCode", authenticate, async (req, res) => {
+  const { email, question, answer, feedback } = req.body;
+  if (!email || !question || !answer || !feedback) {
+    return res.status(422).json({ error: "Please add all the details" });
+  }
+  try {
+    const userFeedbackForm = await User.findOne({ _id: req.userID });
+    if (userFeedbackForm) {
+      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+
+      await userFeedbackForm.save();
+
+      res.status(201).json({ message: "User feedback successful" });
+    }
+  } catch (error) {}
+});
+
+
+// Code to Code page after login
+router.get("/codeToCode", authenticate, (req, res) => {
+  console.log("After authenticate");
+  console.log(req.body);
+  res.send(req.rootUser);
+});
+
+// Code to Code add feedback
+router.post("/codeToCode", authenticate, async (req, res) => {
   const { email, question, answer, feedback } = req.body;
   if (!email || !question || !answer || !feedback) {
     return res.status(422).json({ error: "Please add all the details" });
