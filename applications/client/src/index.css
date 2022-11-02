@@ -81,6 +81,10 @@ body {
   background-color: #ff5823;
 }
 
+.navbar-text {
+  color: white
+}
+
 @media only screen and (max-width: 568px) {
   .highlighted-btn {
     z-index: -900;

@@ -3,34 +3,15 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/Home/logo192.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserContext } from "../App";
-import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 
 const NavbarComp = () => {
   const { state, dispatch } = useContext(UserContext);
 
-  const RenderMenu = () => {
-    if (state) {
-      return (
-        <>
-          <Nav.Link href="/"> Home </Nav.Link>
-          <Nav.Link href="/feedback"> Feedback </Nav.Link>
-          <Nav.Link href="/about"> About </Nav.Link>
-          <Nav.Link href="/logout"> Logout </Nav.Link>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <Nav.Link href="/"> Home </Nav.Link>
-          <Nav.Link href="/feedback"> Feedback </Nav.Link>
-          <Nav.Link href="/about"> About </Nav.Link>
-          <Nav.Link href="/login"> Login </Nav.Link>
-          <Nav.Link href="/register"> Register </Nav.Link>
-          <Nav.Link href="/logout"> Logout </Nav.Link>
-        </>
-      );
-    }
-  };
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <div>
@@ -52,13 +33,60 @@ const NavbarComp = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <RenderMenu />
-            {/* <Nav.Link href="/"> Home </Nav.Link>
-            <Nav.Link href="/feedback"> Feedback </Nav.Link>
-            <Nav.Link href="/about"> About </Nav.Link>
-            <Nav.Link href="/login"> Login </Nav.Link>
-            <Nav.Link href="/register"> Register </Nav.Link>
-            <Nav.Link href="/logout"> Logout </Nav.Link> */}
+            <Link
+              to="/"
+              className="navbar-text"
+              style={{ textDecoration: "none" }}
+            >
+              {" "}
+              Home{" "}
+            </Link>
+            <Link
+              to="/feedback"
+              className="navbar-text"
+              style={{ textDecoration: "none" }}
+            >
+              {" "}
+              Feedback{" "}
+            </Link>
+            <Link
+              to="/about"
+              className="navbar-text"
+              style={{ textDecoration: "none" }}
+            >
+              {" "}
+              About{" "}
+            </Link>
+            {!state && (
+              <Link
+                to="/login"
+                className="navbar-text"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                Login{" "}
+              </Link>
+            )}
+            {!state && (
+              <Link
+                to="/register"
+                className="navbar-text"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                Register{" "}
+              </Link>
+            )}
+            {state && (
+              <Link
+                to="/logout"
+                className="navbar-text"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                Logout{" "}
+              </Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
