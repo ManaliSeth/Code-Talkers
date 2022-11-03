@@ -3,6 +3,7 @@ import {Container, Form, Button, Card} from 'react-bootstrap';
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
+
 const {Configuration , OpenAIApi} = require("openai");
 
 const TextToCode = () => {
@@ -198,49 +199,63 @@ const TextToCode = () => {
                 <div className="form">
                 <Form onSubmit={submitFeedback}>
                     <Form.Group method="POST" className="mb-3">
-                    <Form.Control
-                        type="email"
-                        value={userData.email}
-                        onChange={handleInput}
-                        placeholder="Your Registered Email"
-                        id="feedback_form_email"
-                        name="email"
-                        className="feedback_form_email"
-                        required
-                    />
-                    <Form.Label>Enter the question</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        value={userData.question}
-                        onChange={handleInput}
-                        name="question"
-                        placeholder="Question"
-                        className="feedback_form_question"
-                        rows={5}
-                        required
-                    />
-                    <Form.Label>Enter the output generated</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        value={userData.answer}
-                        onChange={handleInput}
-                        name="answer"
-                        placeholder="Answer Generated"
-                        className="feedback_form_answer"
-                        rows={5}
-                        required
-                    />
-                    <Form.Label>Enter your feedback</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        value={userData.feedback}
-                        onChange={handleInput}
-                        name="feedback"
-                        placeholder="Write your feedback"
-                        className="feedback_form_feedback"
-                        rows={5}
-                        required
-                    />
+
+                    <Form.Group className='mb-3'>
+                        <Form.Label>Enter your registered email</Form.Label>
+                        <Form.Control
+                            type="email"
+                            value={userData.email}
+                            onChange={handleInput}
+                            placeholder="Email"
+                            id="feedback_form_email"
+                            name="email"
+                            className="feedback_form_email"
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group className='mb-3'>
+                        <Form.Label>Enter the question</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            value={userData.question}
+                            onChange={handleInput}
+                            name="question"
+                            placeholder="Question"
+                            className="feedback_form_question"
+                            rows={5}
+                            required
+                        />
+                    </Form.Group>
+                    
+                    <Form.Group className='mb-3'>
+                        <Form.Label>Enter the output generated</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            value={userData.answer}
+                            onChange={handleInput}
+                            name="answer"
+                            placeholder="Answer Generated"
+                            className="feedback_form_answer"
+                            rows={5}
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Enter your feedback</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            value={userData.feedback}
+                            onChange={handleInput}
+                            name="feedback"
+                            placeholder="Write your feedback"
+                            className="feedback_form_feedback"
+                            rows={5}
+                            required
+                        />
+                    </Form.Group>
+                    
                     </Form.Group>
                     <Button
                     variant="primary"
