@@ -97,7 +97,6 @@ const Register = () => {
               <Form.Group className='mb-3' controlId='userType'>
                 <Form.Select
                   name="userType"
-                  // id="userType"
                   onChange={handleChange}
                   value={data.userType}
                   required
@@ -131,4 +130,3 @@ const Register = () => {
 };
 
 export default Register;
-
