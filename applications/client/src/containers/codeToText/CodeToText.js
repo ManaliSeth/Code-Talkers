@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
+import { UserContext } from "../../App";
 const { Configuration, OpenAIApi } = require("openai");
 
 const CodeToText = () => {
+  const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     email: "",
@@ -25,7 +27,7 @@ const CodeToText = () => {
       });
       const data = await res.json();
       console.log(data);
-
+      dispatch({ type: "USER", payload: true });
       if (!res.status === 200) {
         const error = new Error(res.error);
         throw error;
