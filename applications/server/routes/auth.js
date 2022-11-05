@@ -129,6 +129,21 @@ router.post("/codeToCode", authenticate, async (req, res) => {
   } catch (error) {}
 });
 
+
+// Get feedback
+router.get("/feedback", authenticate, async (req, res) => {
+  try {
+    const userFeedback = await User.find({}, {feedbacks:1,_id:0})
+    if (userFeedback) {
+      console.log("userFeedback: ", userFeedback)
+      // res.status(201).json({ message: "User feedback retrieved successfully" });
+      req.userFeedback= userFeedback
+      res.send(req.userFeedback)
+    }
+  } catch (error) {}
+});
+
+
 // for logout
 router.get("/logout", async (req, res) => {
   console.log(`Hello my logout page`);
