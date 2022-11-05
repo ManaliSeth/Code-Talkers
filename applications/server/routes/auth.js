@@ -59,18 +59,11 @@ router.get("/codeToText", authenticate, (req, res) => {
   res.send(req.rootUser);
 });
 
-// for logout
-router.get("/logout", async (req, res) => {
-  console.log(`Hello my logout page`);
-  res.clearCookie("jwttoken", { path: "/" });
-  res.status(200).send("User Logout");
-});
-
-//add feedback
+//code to text add feedback
 router.post("/codeToText", authenticate, async (req, res) => {
   const { email, question, answer, feedback } = req.body;
   if (!email || !question || !answer || !feedback) {
-    return res.status(422).json({ error: "Please fill the form" });
+    return res.status(422).json({ error: "Please add all the details" });
   }
   try {
     const userFeedbackForm = await User.findOne({ _id: req.userID });
@@ -79,8 +72,83 @@ router.post("/codeToText", authenticate, async (req, res) => {
 
       await userFeedbackForm.save();
 
-      res.status(201).json({ message: "user feedback successful" });
+      res.status(201).json({ message: "User feedback successful" });
     }
   } catch (error) {}
 });
+
+
+// Text to Code page after login
+router.get("/textToCode", authenticate, (req, res) => {
+  console.log("After authenticate");
+  console.log(req.body);
+  res.send(req.rootUser);
+});
+
+// Text to Code add feedback
+router.post("/textToCode", authenticate, async (req, res) => {
+  const { email, question, answer, feedback } = req.body;
+  if (!email || !question || !answer || !feedback) {
+    return res.status(422).json({ error: "Please add all the details" });
+  }
+  try {
+    const userFeedbackForm = await User.findOne({ _id: req.userID });
+    if (userFeedbackForm) {
+      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+
+      await userFeedbackForm.save();
+
+      res.status(201).json({ message: "User feedback successful" });
+    }
+  } catch (error) {}
+});
+
+
+// Code to Code page after login
+router.get("/codeToCode", authenticate, (req, res) => {
+  console.log("After authenticate");
+  console.log(req.body);
+  res.send(req.rootUser);
+});
+
+// Code to Code add feedback
+router.post("/codeToCode", authenticate, async (req, res) => {
+  const { email, question, answer, feedback } = req.body;
+  if (!email || !question || !answer || !feedback) {
+    return res.status(422).json({ error: "Please add all the details" });
+  }
+  try {
+    const userFeedbackForm = await User.findOne({ _id: req.userID });
+    if (userFeedbackForm) {
+      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+
+      await userFeedbackForm.save();
+
+      res.status(201).json({ message: "User feedback successful" });
+    }
+  } catch (error) {}
+});
+
+
+// Get feedback
+router.get("/feedback", authenticate, async (req, res) => {
+  try {
+    const userFeedback = await User.find({}, {feedbacks:1,_id:0})
+    if (userFeedback) {
+      console.log("userFeedback: ", userFeedback)
+      // res.status(201).json({ message: "User feedback retrieved successfully" });
+      req.userFeedback= userFeedback
+      res.send(req.userFeedback)
+    }
+  } catch (error) {}
+});
+
+
+// for logout
+router.get("/logout", async (req, res) => {
+  console.log(`Hello my logout page`);
+  res.clearCookie("jwttoken", { path: "/" });
+  res.status(200).send("User Logout");
+});
+
 module.exports = router;
