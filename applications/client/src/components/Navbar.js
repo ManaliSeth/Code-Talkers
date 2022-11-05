@@ -1,34 +1,97 @@
-
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import React, { Component } from 'react';
 import logo from "../assets/Home/logo192.png";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { UserContext } from "../App";
+import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 
-class NavbarComp extends Component {
-  render(){
-    return (
-        <div>
-          <Navbar bg="dark" variant="dark" sticky="top" expand="lg" CollapseOnSelect>
-              <Navbar.Brand href="/"><img src={logo} alt="logo1" width="50px"/>Code Talkers</Navbar.Brand>
-              <Navbar.Toggle aria-controls="navbarScroll" />
-              <Navbar.Collapse id="navbarScroll">
-                <Nav
-                  className="navbar-nav justify-content-start col-3 col-md-4"
-                  style={{ maxHeight: "100px" }}
-                  navbarScroll
-                >
-                  <Nav.Link href="/"> Home </Nav.Link>
-                  <Nav.Link href="https://beta.openai.com/docs/introduction"> OpenAI </Nav.Link>
-                  <Nav.Link href="/about"> About </Nav.Link>
-                  <Nav.Link href="/login"> Login </Nav.Link>
-                  
-                </Nav>
-              </Navbar.Collapse>
-          </Navbar>
-        </div>
-    );
-}
-}
+const NavbarComp = () => {
+  const { state, dispatch } = useContext(UserContext);
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
+  return (
+    <div>
+      <Navbar
+        collapseOnSelect
+        bg="dark"
+        variant="dark"
+        sticky="top"
+        expand="lg"
+      >
+        <Navbar.Brand href="/">
+          <img src={logo} alt="logo1" width="50px" />
+          Code Talkers
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav
+            className="navbar-nav  col-md-10"
+            style={{ maxHeight: "100px" }}
+            navbarScroll
+          >
+            <Link
+              to="/"
+              className="navbar-text"
+              style={{ textDecoration: "none" }}
+            >
+              {" "}
+              Home{" "}
+            </Link>
+            <Link
+              to="/feedback"
+              className="navbar-text"
+              style={{ textDecoration: "none" }}
+            >
+              {" "}
+              Feedback{" "}
+            </Link>
+            <Link
+              to="/about"
+              className="navbar-text"
+              style={{ textDecoration: "none" }}
+            >
+              {" "}
+              About{" "}
+            </Link>
+            {!state && (
+              <Link
+                to="/login"
+                className="navbar-text"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                Login{" "}
+              </Link>
+            )}
+            {!state && (
+              <Link
+                to="/register"
+                className="navbar-text"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                Register{" "}
+              </Link>
+            )}
+            {state && (
+              <Link
+                to="/logout"
+                className="navbar-text"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                Logout{" "}
+              </Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
+  );
+};
 
 export default NavbarComp;
