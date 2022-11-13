@@ -241,6 +241,15 @@ body {
   transition: 1s ease-out;
 }
 
+input[type="radio"] {
+  display: none;
+}
+
+.star {
+  cursor: pointer;
+  transition: color 200ms;
+}
+
 @media screen and (max-width:1110px) {
   .profile-picture {
     margin: 0 0px 0 80px;
