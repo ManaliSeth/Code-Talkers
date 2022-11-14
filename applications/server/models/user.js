@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      userRating: {
+        type: String,
+        required: true,
+      }
     },
   ],
   tokens: [
@@ -62,7 +66,8 @@ userSchema.methods.addFeedback = async function (
   email,
   question,
   answer,
-  feedback
+  feedback,
+  userRating,
 ) {
   try {
     this.feedbacks = this.feedbacks.concat({
@@ -70,6 +75,7 @@ userSchema.methods.addFeedback = async function (
       question,
       answer,
       feedback,
+      userRating,
     });
     await this.save();
     return this.feedbacks;
