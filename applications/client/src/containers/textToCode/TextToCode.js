@@ -11,6 +11,32 @@ const {Configuration , OpenAIApi} = require("openai");
 const TextToCode = () => {
 
     const { state, dispatch } = useContext(UserContext);
+    const [response, setResponse] = useState(
+      "....... await the response, might take a few seconds!"
+    );
+    const [dropdownValue, setDropdownValue] = useState('Python');
+    const [rating, setRating] = useState(null);
+    const [hover, setHover] = useState(null);
+
+    const onMouseEnter = (ratingValue) => {
+      setHover(ratingValue)
+    }
+
+    const onMouseLeave = () => {
+      setHover(null)
+    }
+
+    const onClick = (ratingValue) => {
+      setRating(ratingValue)
+    }
+
+    const [userData, setUserData] = useState({
+        email: "",
+        question: "",
+        answer: "",
+        feedback: "",
+        userRating: null,
+      });
 
     const navigate = useNavigate();
 
@@ -43,13 +69,6 @@ const TextToCode = () => {
     useEffect(() => {
         callTextToCode();
     });
-
-    const [response, setResponse] = useState(
-        "....... await the response, might take a few seconds!"
-      );
-
-    const [dropdownValue, setDropdownValue] = useState('Python');
-
     
     const handleDropdown = event => {
         setDropdownValue(event.target.value);
@@ -91,26 +110,21 @@ const TextToCode = () => {
         });
     }
 
-    const [userData, setUserData] = useState({
-        email: "",
-        question: "",
-        answer: "",
-        feedback: "",
-      });
-
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-    
+        console.log("Inside handle Input", name, value);
         setUserData({ ...userData, [name]: value });
+        console.log("userData:", userData);
       };
     
     const submitFeedback = async (e) => {
         e.preventDefault();
     
-        const { email, question, answer, feedback } = userData;
+        const { email, question, answer, feedback, userRating } = userData;
     
         console.log("hello from submit feedback");
+        console.log("userRating:", userRating)
         const res = await fetch("/api/auth/TextToCode", {
           method: "POST",
           headers: {
@@ -121,6 +135,7 @@ const TextToCode = () => {
             question,
             answer,
             feedback,
+            userRating,
           }),
         });
 
@@ -135,6 +150,7 @@ const TextToCode = () => {
             question: "",
             answer: "",
             feedback: "",
+            userRating: "",
           });
         }
       };
@@ -191,9 +207,7 @@ const TextToCode = () => {
                     <Card.Title><h3>{dropdownValue} code</h3></Card.Title>
                     <br />
                     <Card.Text>
-                    <h4>
                         <pre>{response}</pre>
-                    </h4>
                     </Card.Text>
                 </Card.Body>
                 </Card>   
@@ -204,7 +218,7 @@ const TextToCode = () => {
             <Row>
             <div className="mb-3">
                 <div className="form">
-                <Form onSubmit={submitFeedback}>
+                <Form onSubmit={submitFeedback} className='mb-3'>
                     <Form.Group method="POST" className="mb-3">
 
                       <Form.Group className='mb-3'>
@@ -265,12 +279,29 @@ const TextToCode = () => {
 
                       <Form.Group className='mb-3'>
                         <Form.Label>Rate the response</Form.Label>
-                        <StarRating
+                        <br/>
                         
-                        />
+                        <div className='star'>
+                        {[1,2,3,4,5].map((ratingValue)=> {
+                          return (
+                            <StarRating
+                              ratingValue={ratingValue} 
+                              hover={hover} 
+                              rating={rating} 
+                              userData={userData}
+                              onMouseEnter={onMouseEnter} 
+                              onMouseLeave={onMouseLeave} 
+                              onClick={onClick}
+                              onChange={handleInput} 
+                            /> 
+                          )
+                        })}
+                        </div>
+                        
                       </Form.Group>
-                      
-                    </Form.Group >
+                    
+                    </Form.Group>
+
                     <Button
                       variant="primary"
                       size="lg"

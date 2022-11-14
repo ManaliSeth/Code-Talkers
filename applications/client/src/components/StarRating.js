@@ -1,34 +1,29 @@
 import { useState} from 'react';
 import { FaStar } from 'react-icons/fa';
+// import { Form } from 'react-bootstrap';
 
-const StarRating = () => {
+const StarRating = (props) => {
 
-    const [rating, setRating] = useState(null);
-    const [hover, setHover] = useState(null);
+    const {ratingValue, rating, hover, userData, onClick, onMouseEnter, onMouseLeave, onChange} = props;
 
   return (
     <div>
-        {[...Array(5)].map((star,i) => {
-            const ratingValue = i + 1;
-            return (
-                <label>
-                    <input 
-                        type="radio" 
-                        name="rating" 
-                        value={ ratingValue } 
-                        onClick={() => setRating(ratingValue)}
-                    /> 
-                    <FaStar 
-                        className="star" 
-                        color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
-                        size={45}
-                        onMouseEnter={() => setHover(ratingValue)}
-                        onMouseLeave={() => setHover(null)}
-                    /> 
-                </label>
-            )
-        })}
-        {/* <p>The rating is {rating}</p> */}
+        <label>
+            <input 
+                type="radio" 
+                name="userRating" 
+                value={ratingValue} 
+                onClick={onClick}
+                onChange={onChange}
+            /> 
+            <FaStar
+                className="star" 
+                color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                size={45}
+                onMouseEnter={() => onMouseEnter(ratingValue)}
+                onMouseLeave={() => onMouseLeave}
+            /> 
+        </label>
     </div>
   )
 }

@@ -87,14 +87,15 @@ router.get("/textToCode", authenticate, (req, res) => {
 
 // Text to Code add feedback
 router.post("/textToCode", authenticate, async (req, res) => {
-  const { email, question, answer, feedback } = req.body;
-  if (!email || !question || !answer || !feedback) {
+  const { email, question, answer, feedback, userRating } = req.body;
+  console.log("Inside Auth",userRating);
+  if (!email || !question || !answer || !feedback || !userRating) {
     return res.status(422).json({ error: "Please add all the details" });
   }
   try {
     const userFeedbackForm = await User.findOne({ _id: req.userID });
     if (userFeedbackForm) {
-      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+      await userFeedbackForm.addFeedback(email, question, answer, feedback, userRating);
 
       await userFeedbackForm.save();
 
