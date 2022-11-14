@@ -11,12 +11,11 @@ const {Configuration , OpenAIApi} = require("openai");
 const TextToCode = () => {
 
     const { state, dispatch } = useContext(UserContext);
-    const [response, setResponse] = useState(
-      "....... await the response, might take a few seconds!"
-    );
+    const [response, setResponse] = useState("");
     const [dropdownValue, setDropdownValue] = useState('Python');
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
+    const [userDetails, setUserDetails] = useState([]);
 
     const onMouseEnter = (ratingValue) => {
       setHover(ratingValue)
@@ -52,7 +51,8 @@ const TextToCode = () => {
           });
           // console.log(res);
           const data = await res.json();
-          console.log(data);
+          
+          setUserDetails(data)
 
           dispatch({ type: "USER", payload: true });
           
@@ -68,7 +68,7 @@ const TextToCode = () => {
     
     useEffect(() => {
         callTextToCode();
-    });
+    },[]);
     
     const handleDropdown = event => {
         setDropdownValue(event.target.value);
@@ -82,7 +82,7 @@ const TextToCode = () => {
 
         const formData = new FormData(e.target),
         formDataObj = Object.fromEntries(formData.entries());
-        console.log(formDataObj.query)
+        console.log(formDataObj.question)
 
         //OPENAI
 
@@ -94,7 +94,7 @@ const TextToCode = () => {
 
         openai.createCompletion({
             model: "code-davinci-002",
-            prompt: `\n\n\\"\\"\\"\nWrite a ${dropdownValue} code to ${formDataObj.query}:\n`,
+            prompt: `\n\n\\"\\"\\"\nWrite a ${dropdownValue} code to ${formDataObj.question}:\n`,
             temperature: 0.1,
             max_tokens: 256,
             top_p: 1,
@@ -104,11 +104,14 @@ const TextToCode = () => {
             presence_penalty: 0,
             stop: ["\"\"\""],
         }).then((response) =>{
+            console.log("****************")
             console.log(response);
             setResponse(response.data.choices[0].text);
             setDropdownValue(dropdownValue);
+            setUserData({...userData, email: userDetails.email, answer: response.data.choices[0].text});
         });
-    }
+        
+    } 
 
     const handleInput = (e) => {
         const name = e.target.name;
@@ -177,7 +180,6 @@ const TextToCode = () => {
                                 className="form-control"
                                 id="progLang"
                                 >
-                                {/* <option value="noLangSelected">Select language</option> */}
                                 <option value="Python">Python</option>
                                 <option value="Java">Java</option>
                                 <option value="C++">C++</option>
@@ -186,7 +188,13 @@ const TextToCode = () => {
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label> Write your query to generate code for </Form.Label>
-                            <Form.Control required as="textarea" name="query" placeholder="Enter your query" rows={5}/>
+                            <Form.Control required 
+                              as="textarea" 
+                              name="question" 
+                              placeholder="Enter your question" 
+                              rows={5}
+                              onChange={handleInput}
+                            />
                             <Form.Text className="text-muted">
                                 Enter as much information as possible for more accurate code generation. By default it will generate code in Python
                             </Form.Text>
@@ -195,6 +203,11 @@ const TextToCode = () => {
                         <Button variant="primary" size="lg" type="submit">
                             Get AI Suggestions
                         </Button>
+
+                        <Form.Group>
+                          <Form.Text>....... await the response, might take a few seconds!</Form.Text>
+                        </Form.Group>
+
                     </Form>
                 </Col>  
                 </Row>
@@ -225,8 +238,7 @@ const TextToCode = () => {
                           <Form.Label>Enter your registered email</Form.Label>
                           <Form.Control
                               type="email"
-                              value={userData.email}
-                              onChange={handleInput}
+                              value={userDetails.email}
                               placeholder="Email"
                               id="feedback_form_email"
                               name="email"
@@ -240,7 +252,6 @@ const TextToCode = () => {
                           <Form.Control
                               as="textarea"
                               value={userData.question}
-                              onChange={handleInput}
                               name="question"
                               placeholder="Question"
                               className="feedback_form_question"
@@ -253,8 +264,7 @@ const TextToCode = () => {
                           <Form.Label>Enter the output generated</Form.Label>
                           <Form.Control
                               as="textarea"
-                              value={userData.answer}
-                              onChange={handleInput}
+                              value={response}
                               name="answer"
                               placeholder="Answer Generated"
                               className="feedback_form_answer"
