@@ -218,7 +218,7 @@ const TextToCode = () => {
             <Row>
             <div className="mb-3">
                 <div className="form">
-                <Form onSubmit={submitFeedback} className='mb-3'>
+                <Form onSubmit={submitFeedback}>
                     <Form.Group method="POST" className="mb-3">
 
                       <Form.Group className='mb-3'>

@@ -4,13 +4,42 @@ import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
 import { UserContext } from "../../App";
+import StarRating from '../../components/StarRating';
 
 const {Configuration , OpenAIApi} = require("openai");
 
 const CodeToCode = () => {
 
     const { state, dispatch } = useContext(UserContext);
+    const [response, setResponse] = useState(
+        "....... await the response, might take a few seconds!"
+    );
+    const [dropdownValue1, setDropdownValue1] = useState('Python');
+    const [dropdownValue2, setDropdownValue2] = useState('Java');
 
+    const [rating, setRating] = useState(null);
+    const [hover, setHover] = useState(null);
+
+    const onMouseEnter = (ratingValue) => {
+      setHover(ratingValue)
+    }
+
+    const onMouseLeave = () => {
+      setHover(null)
+    }
+
+    const onClick = (ratingValue) => {
+      setRating(ratingValue)
+    }
+
+    const [userData, setUserData] = useState({
+        email: "",
+        question: "",
+        answer: "",
+        feedback: "",
+        userRating: null,
+    });
+    
     const navigate = useNavigate();
 
     const callCodeToCode = async () => {
@@ -42,13 +71,6 @@ const CodeToCode = () => {
     useEffect(() => {
         callCodeToCode();
     });
-
-    const [response, setResponse] = useState(
-        "....... await the response, might take a few seconds!"
-      );
-
-    const [dropdownValue1, setDropdownValue1] = useState('Python');
-    const [dropdownValue2, setDropdownValue2] = useState('Java');
 
     const handleDropdown1 = event => {
         setDropdownValue1(event.target.value);
@@ -96,13 +118,6 @@ const CodeToCode = () => {
         
     }
 
-    const [userData, setUserData] = useState({
-        email: "",
-        question: "",
-        answer: "",
-        feedback: "",
-      });
-
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -113,7 +128,7 @@ const CodeToCode = () => {
     const submitFeedback = async (e) => {
         e.preventDefault();
     
-        const { email, question, answer, feedback } = userData;
+        const { email, question, answer, feedback, userRating } = userData;
     
         console.log("hello from submit feedback");
         const res = await fetch("/api/auth/CodeToCode", {
@@ -126,6 +141,7 @@ const CodeToCode = () => {
             question,
             answer,
             feedback,
+            userRating,
           }),
         });
 
@@ -140,6 +156,7 @@ const CodeToCode = () => {
             question: "",
             answer: "",
             feedback: "",
+            userRating: "",
           });
         }
     };
@@ -221,9 +238,7 @@ const CodeToCode = () => {
                 <Card.Title><h3>{dropdownValue2} code</h3></Card.Title>
                 <br />
                 <Card.Text>
-                <h4>
                     <pre>{response}</pre>
-                </h4>
                 </Card.Text>
             </Card.Body>
             </Card>  
@@ -236,61 +251,85 @@ const CodeToCode = () => {
                 <div className="form">
                 <Form onSubmit={submitFeedback}>
                     <Form.Group method="POST" className="mb-3">
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Enter your registered email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            value={userData.email}
-                            onChange={handleInput}
-                            placeholder="Email"
-                            id="feedback_form_email"
-                            name="email"
-                            className="feedback_form_email"
-                            required
-                        />
-                    </Form.Group>
+                        
+                        <Form.Group className='mb-3'>
+                            <Form.Label>Enter your registered email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                value={userData.email}
+                                onChange={handleInput}
+                                placeholder="Email"
+                                id="feedback_form_email"
+                                name="email"
+                                className="feedback_form_email"
+                                required
+                            />
+                        </Form.Group>
 
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Enter the question</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            value={userData.question}
-                            onChange={handleInput}
-                            name="question"
-                            placeholder="Question"
-                            className="feedback_form_question"
-                            rows={5}
-                            required
-                        />
-                    </Form.Group>
-                    
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Enter the output generated</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            value={userData.answer}
-                            onChange={handleInput}
-                            name="answer"
-                            placeholder="Answer Generated"
-                            className="feedback_form_answer"
-                            rows={5}
-                            required
-                        />
-                    </Form.Group>
+                        <Form.Group className='mb-3'>
+                            <Form.Label>Enter the question</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                value={userData.question}
+                                onChange={handleInput}
+                                name="question"
+                                placeholder="Question"
+                                className="feedback_form_question"
+                                rows={5}
+                                required
+                            />
+                        </Form.Group>
+                        
+                        <Form.Group className='mb-3'>
+                            <Form.Label>Enter the output generated</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                value={userData.answer}
+                                onChange={handleInput}
+                                name="answer"
+                                placeholder="Answer Generated"
+                                className="feedback_form_answer"
+                                rows={5}
+                                required
+                            />
+                        </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Enter your feedback</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            value={userData.feedback}
-                            onChange={handleInput}
-                            name="feedback"
-                            placeholder="Write your feedback"
-                            className="feedback_form_feedback"
-                            rows={5}
-                            required
-                        />
-                    </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Enter your feedback</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                value={userData.feedback}
+                                onChange={handleInput}
+                                name="feedback"
+                                placeholder="Write your feedback"
+                                className="feedback_form_feedback"
+                                rows={5}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group className='mb-3'>
+                            <Form.Label>Rate the response</Form.Label>
+                            <br/>
+                            
+                            <div className='star'>
+                            {[1,2,3,4,5].map((ratingValue)=> {
+                            return (
+                                <StarRating
+                                ratingValue={ratingValue} 
+                                hover={hover} 
+                                rating={rating} 
+                                userData={userData}
+                                onMouseEnter={onMouseEnter} 
+                                onMouseLeave={onMouseLeave} 
+                                onClick={onClick}
+                                onChange={handleInput} 
+                                /> 
+                            )
+                            })}
+                            </div>
+                            
+                        </Form.Group>
                     
                     </Form.Group>
                     <Button

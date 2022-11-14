@@ -1,6 +1,5 @@
 import { useState} from 'react';
 import { FaStar } from 'react-icons/fa';
-// import { Form } from 'react-bootstrap';
 
 const StarRating = (props) => {
 
