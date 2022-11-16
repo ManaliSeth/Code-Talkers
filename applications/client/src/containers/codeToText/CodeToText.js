@@ -145,7 +145,7 @@ const CodeToText = () => {
       </div>
       <br />
       <Row>
-        <Col>
+        <Col className="col-md-6">
           <Form onSubmit={onFormSubmit}>
             <Form.Group className="mb-3">
               <Form.Label> What Code you want to undertsand?</Form.Label>
@@ -154,7 +154,7 @@ const CodeToText = () => {
                 as="textarea"
                 name="question"
                 placeholder="Enter your code"
-                rows={5}
+                rows={12}
                 onChange={handleInput}
               />
               <Form.Text className="text-muted">
@@ -172,27 +172,27 @@ const CodeToText = () => {
             </Form.Group>
           </Form>
         </Col>
+        <Col className="col-md-6">
+          <h5>Code Explanation</h5>
+          <Card className="scrollable">
+            <Card.Body className="card-body">
+              <Card.Title>
+                <h5>Output</h5>
+              </Card.Title>
+              <Card.Text>
+                <pre>{response}</pre>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
       </Row>
-      <br />
-      <br />
-      <Card>
-        <Card.Body>
-          <Card.Title>
-            <h3>Code Explanation</h3>
-          </Card.Title>
-          <br />
-          <Card.Text>
-            <pre>{response}</pre>
-          </Card.Text>
-        </Card.Body>
-      </Card>
       <br />
 
       <h1>User Feedback</h1>
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback}>
+            <Form>
               <Form.Group method="POST" className="mb-3">
                 <Form.Group className="mb-3">
                   <Form.Label>Enter your registered email</Form.Label>
@@ -267,7 +267,12 @@ const CodeToText = () => {
                   </div>
                 </Form.Group>
               </Form.Group>
-              <Button variant="primary" size="lg" type="submit">
+              <Button
+                variant="primary"
+                size="lg"
+                type="submit"
+                onSubmit={submitFeedback}
+              >
                 Submit Feedback
               </Button>
             </Form>
