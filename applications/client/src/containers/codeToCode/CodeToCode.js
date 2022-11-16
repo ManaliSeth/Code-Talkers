@@ -1,12 +1,12 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {Container, Form, Button, Card} from 'react-bootstrap';
+import React, { useState, useEffect, useContext } from 'react';
+import { Container, Form, Button, Card } from 'react-bootstrap';
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
 import { UserContext } from "../../App";
 import StarRating from '../../components/StarRating';
 
-const {Configuration , OpenAIApi} = require("openai");
+const { Configuration , OpenAIApi } = require("openai");
 
 const CodeToCode = () => {
 
@@ -159,6 +159,8 @@ const CodeToCode = () => {
             feedback: "",
             userRating: "",
           });
+          setResponse("");
+          setRating(null);
         }
     };
 
@@ -172,88 +174,84 @@ const CodeToCode = () => {
             <br />
             <br />
 
-            <Row>
-            <Col>
-                <Form onSubmit={onFormSubmit}>
+            <Form onSubmit={onFormSubmit}>
+                <Row>
+                    <Col className='col-md-6'>
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="progLang1">Select Programming language to convert code from</Form.Label>
+                            <Form.Select
+                                value={dropdownValue1}
+                                onChange={handleDropdown1}
+                                className="form-control"
+                                id="progLang1"
+                                >
+                                <option value="Python">Python</option>
+                                <option value="Java">Java</option>
+                                <option value="C++">C++</option>
+                            </Form.Select>
+                            <Form.Text className="text-muted">
+                                By default source code will be considered in Python unless chosen from dropdown.
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label htmlFor="progLang1">Select Programming language to convert code from</Form.Label>
-                        <Form.Select
-                            value={dropdownValue1}
-                            onChange={handleDropdown1}
-                            className="form-control"
-                            id="progLang1"
-                            >
-                            <option value="Python">Python</option>
-                            <option value="Java">Java</option>
-                            <option value="C++">C++</option>
-                        </Form.Select>
-                        <Form.Text className="text-muted">
-                            <br/> By default source code will be considered in Python unless chosen from dropdown.
-                        </Form.Text>
-                    </Form.Group>
+                    <Col className='col-md-6'>
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="progLang2">Select Programming language to convert code in</Form.Label>
+                            <Form.Select
+                                value={dropdownValue2}
+                                onChange={handleDropdown2}
+                                className="form-control"
+                                id="progLang2"
+                                >
+                                <option value="Java">Java</option>
+                                <option value="Python">Python</option>
+                                <option value="C++">C++</option>
+                            </Form.Select>
+                            <Form.Text>
+                                By default it will convert code in Java unless chosen from dropdown.
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
+                </Row>
 
-                    <br />
+                <Row>
+                    <Col className='col-md-6'>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label> Write your {dropdownValue1} code </Form.Label>
+                            <Form.Control required 
+                                as="textarea" 
+                                name="question" 
+                                placeholder="Source code" 
+                                rows={12}
+                                onChange={handleInput}
+                            />
+                            <Form.Text className="text-muted">
+                                Enter proper information for more accurate code translation. Responses might not be 100% accurate.
+                            </Form.Text>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label> Write your {dropdownValue1} code </Form.Label>
-                        <Form.Control required 
-                            as="textarea" 
-                            name="question" 
-                            placeholder="Source code" 
-                            rows={5}
-                            onChange={handleInput}
-                        />
-                        <Form.Text className="text-muted">
-                            <br/> Enter proper information for more accurate code translation. 
-                        </Form.Text>
-                    </Form.Group>
+                        <Button variant="primary" size="lg" type="submit">
+                            Get AI Suggestions
+                        </Button>
 
-                    <br />
-                    <br />
+                        <Form.Group>
+                            <Form.Text>....... await the response, might take a few seconds!</Form.Text>
+                        </Form.Group>
+                    </Col>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label htmlFor="progLang2">Select Programming language to convert code in</Form.Label>
-                        <Form.Select
-                            value={dropdownValue2}
-                            onChange={handleDropdown2}
-                            className="form-control"
-                            id="progLang2"
-                            >
-                            <option value="Java">Java</option>
-                            <option value="Python">Python</option>
-                            <option value="C++">C++</option>
-                        </Form.Select>
-                        <Form.Text>
-                            <br/> By default it will convert code in Java unless chosen from dropdown.
-                        </Form.Text>
-                    </Form.Group>
-
-                    <Button variant="primary" size="lg" type="submit">
-                        Get AI Suggestions
-                    </Button>
-
-                    <Form.Group>
-                          <Form.Text>....... await the response, might take a few seconds!</Form.Text>
-                    </Form.Group>
-
-                </Form>
-            </Col>  
-            </Row>
-
-            <br />
-            <br />
-
-            <Card>
-            <Card.Body>
-                <Card.Title><h3>{dropdownValue2} code</h3></Card.Title>
-                <br />
-                <Card.Text>
-                    <pre>{response}</pre>
-                </Card.Text>
-            </Card.Body>
-            </Card>  
-
+                    <Col className='col-md-6'>
+                        <h5>Result: {dropdownValue2} code</h5>
+                        <Card style={{height: '305px', overflow: 'auto'}}>
+                        <Card.Body>
+                            <Card.Text>
+                                <pre>{response}</pre>
+                            </Card.Text>
+                        </Card.Body>
+                        </Card>  
+                    </Col>
+                </Row>
+            </Form>
             <br />
 
             <h1>User Feedback</h1>

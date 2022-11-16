@@ -51,6 +51,20 @@ const validate = (data) => {
   return schema.validate(data);
 };
 
+router.get("/getUserType", authenticate, async (req, res) => {
+  try {
+    const loggedInUser = req.rootUser;
+    console.log("loggedInUser", loggedInUser);
+    if (loggedInUser) {
+      req.user = loggedInUser;
+      res.send(req.user);
+    }
+  } catch (error) {
+    console.log("Error", error);
+  }
+});
+
+
 //code to Text page after login
 
 router.get("/codeToText", authenticate, (req, res) => {
