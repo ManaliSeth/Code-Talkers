@@ -33,7 +33,7 @@ const Home = () => {
           <Card
             header="Code To Text"
             title="Translate Code to Natural Language"
-            text="Explain a complicated piece of code. User can input the code in the text box."
+            text="Explain a complicated piece of code. User can input the code in the text box and get the generated explanation for it."
             theLink="/codeToText"
           />
         </Col>
