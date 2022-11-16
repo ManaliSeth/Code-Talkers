@@ -104,8 +104,6 @@ const TextToCode = () => {
         stop: ['"""'],
       })
       .then((response) => {
-        console.log("****************");
-        console.log(response);
         setResponse(response.data.choices[0].text);
         setDropdownValue(dropdownValue);
         setUserData({
@@ -119,9 +117,7 @@ const TextToCode = () => {
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log("Inside handle Input", name, value);
     setUserData({ ...userData, [name]: value });
-    console.log("userData:", userData);
   };
 
   const submitFeedback = async (e) => {
@@ -129,8 +125,8 @@ const TextToCode = () => {
 
     const { email, question, answer, feedback, userRating } = userData;
 
-    console.log("hello from submit feedback");
-    console.log("userRating:", userRating);
+    console.log(userData);
+
     const res = await fetch("/api/auth/TextToCode", {
       method: "POST",
       headers: {
@@ -158,6 +154,8 @@ const TextToCode = () => {
         feedback: "",
         userRating: "",
       });
+      setResponse("");
+      setRating(null);
     }
   };
 
@@ -170,39 +168,41 @@ const TextToCode = () => {
       </div>
       <br />
       <br />
+      
+      <Form onSubmit={onFormSubmit}>
+        <Row>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="progLang">
+              Select Programming language to generate code in
+            </Form.Label>
+            <Form.Select
+              value={dropdownValue}
+              onChange={handleDropdown}
+              className="form-control"
+              id="progLang"
+            >
+              <option value="Python">Python</option>
+              <option value="Java">Java</option>
+              <option value="C++">C++</option>
+            </Form.Select>
+          </Form.Group>
+        </Row>
 
-      <Row>
-        <Col>
-          <Form onSubmit={onFormSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label htmlFor="progLang">
-                Select Programming language to generate code in
-              </Form.Label>
-              <Form.Select
-                value={dropdownValue}
-                onChange={handleDropdown}
-                className="form-control"
-                id="progLang"
-              >
-                <option value="Python">Python</option>
-                <option value="Java">Java</option>
-                <option value="C++">C++</option>
-              </Form.Select>
-            </Form.Group>
-
+        <Row>
+          <Col className="col-md-6">
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label> Write your query to generate code for </Form.Label>
+              <Form.Label> Query: Write your question to generate code for </Form.Label>
               <Form.Control
                 required
                 as="textarea"
                 name="question"
                 placeholder="Enter your question"
-                rows={5}
+                rows={12}
                 onChange={handleInput}
               />
               <Form.Text className="text-muted">
                 Enter as much information as possible for more accurate code
-                generation. By default it will generate code in Python
+                generation. Responses might not be 100% accurate. By default it will generate code in Python
               </Form.Text>
             </Form.Group>
 
@@ -215,24 +215,21 @@ const TextToCode = () => {
                 ....... await the response, might take a few seconds!
               </Form.Text>
             </Form.Group>
-          </Form>
-        </Col>
-      </Row>
+          </Col>
 
-      <br />
-      <br />
-
-      <Card>
-        <Card.Body>
-          <Card.Title>
-            <h3>{dropdownValue} code</h3>
-          </Card.Title>
-          <br />
-          <Card.Text>
-            <pre>{response}</pre>
-          </Card.Text>
-        </Card.Body>
-      </Card>
+          <Col className="col-md-6">
+            <h5>Result: {dropdownValue} code</h5>
+            <Card style={{height: '305px', overflow: 'auto'}}>
+              <Card.Body>
+                <br />
+                <Card.Text>
+                  <pre>{response}</pre>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Form>
 
       <br />
 
@@ -240,8 +237,8 @@ const TextToCode = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback}>
-              <Form.Group method="POST" className="mb-3">
+            <Form onSubmit={submitFeedback} method="POST" >
+              {/* <Form.Group className="mb-3"> */}
                 <Form.Group className="mb-3">
                   <Form.Label>Enter your registered email</Form.Label>
                   <Form.Control
@@ -316,9 +313,14 @@ const TextToCode = () => {
                     })}
                   </div>
                 </Form.Group>
-              </Form.Group>
+              {/* </Form.Group> */}
 
-              <Button variant="primary" size="lg" type="submit">
+              <Button 
+                variant="primary" 
+                size="lg" 
+                type="submit"
+                // onSubmit={submitFeedback}
+              >
                 Submit Feedback
               </Button>
             </Form>
