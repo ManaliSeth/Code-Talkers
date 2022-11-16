@@ -133,6 +133,8 @@ const CodeToText = () => {
         feedback: "",
         userRating: "",
       });
+      setResponse("");
+      setRating(null);
     }
   };
 
@@ -148,7 +150,7 @@ const CodeToText = () => {
         <Col className="col-md-6">
           <Form onSubmit={onFormSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label> What Code you want to undertsand?</Form.Label>
+              <Form.Label> What Code you want to understand?</Form.Label>
               <Form.Control
                 required
                 as="textarea"
@@ -158,8 +160,8 @@ const CodeToText = () => {
                 onChange={handleInput}
               />
               <Form.Text className="text-muted">
-                Enter as much information as possible for more accurate
-                description.
+                Enter as much information as possible for more accurate code
+                generation. Responses might not be 100% accurate.
               </Form.Text>
             </Form.Group>
             <Button variant="primary" size="lg" type="submit">
@@ -174,7 +176,7 @@ const CodeToText = () => {
         </Col>
         <Col className="col-md-6">
           <h5>Code Explanation</h5>
-          <Card className="scrollable">
+          <Card style={{ height: "305px", overflow: "auto" }}>
             <Card.Body className="card-body">
               <Card.Title>
                 <h5>Output</h5>
@@ -192,87 +194,79 @@ const CodeToText = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form>
-              <Form.Group method="POST" className="mb-3">
-                <Form.Group className="mb-3">
-                  <Form.Label>Enter your registered email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={userDetails.email}
-                    placeholder="Email"
-                    id="feedback_form_email"
-                    name="email"
-                    className="feedback_form_email"
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Enter the question</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    value={userData.question}
-                    name="question"
-                    placeholder="Question"
-                    className="feedback_form_question"
-                    rows={5}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Enter the output generated</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    value={response}
-                    name="answer"
-                    placeholder="Answer Generated"
-                    className="feedback_form_answer"
-                    rows={5}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Enter your feedback</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    value={userData.feedback}
-                    onChange={handleInput}
-                    name="feedback"
-                    placeholder="Write your feedback"
-                    className="feedback_form_feedback"
-                    rows={5}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Rate the response</Form.Label>
-                  <br />
-                  <div className="star">
-                    {[1, 2, 3, 4, 5].map((ratingValue) => {
-                      return (
-                        <StarRating
-                          ratingValue={ratingValue}
-                          hover={hover}
-                          rating={rating}
-                          userData={userData}
-                          onMouseEnter={onMouseEnter}
-                          onMouseLeave={onMouseLeave}
-                          onClick={onClick}
-                          onChange={handleInput}
-                        />
-                      );
-                    })}
-                  </div>
-                </Form.Group>
+            <Form onSubmit={submitFeedback} method="POST">
+              <Form.Group className="mb-3">
+                <Form.Label>Enter your registered email</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={userDetails.email}
+                  placeholder="Email"
+                  name="email"
+                  className="feedback_form_email"
+                  rows={1}
+                  required
+                />
               </Form.Group>
-              <Button
-                variant="primary"
-                size="lg"
-                type="submit"
-                onSubmit={submitFeedback}
-              >
+              <Form.Group className="mb-3">
+                <Form.Label>Enter the question</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={userData.question}
+                  name="question"
+                  placeholder="Question"
+                  className="feedback_form_question"
+                  rows={5}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Enter the output generated</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={response}
+                  name="answer"
+                  placeholder="Answer Generated"
+                  className="feedback_form_answer"
+                  rows={5}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Enter your feedback</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={userData.feedback}
+                  onChange={handleInput}
+                  name="feedback"
+                  placeholder="Write your feedback"
+                  className="feedback_form_feedback"
+                  rows={5}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Rate the response</Form.Label>
+                <br />
+                <div className="star">
+                  {[1, 2, 3, 4, 5].map((ratingValue) => {
+                    return (
+                      <StarRating
+                        ratingValue={ratingValue}
+                        hover={hover}
+                        rating={rating}
+                        userData={userData}
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
+                        onClick={onClick}
+                        onChange={handleInput}
+                      />
+                    );
+                  })}
+                </div>
+              </Form.Group>
+              <Button variant="primary" size="lg" type="submit">
                 Submit Feedback
               </Button>
             </Form>

@@ -64,9 +64,8 @@ body {
   max-width: 100%;
 }
 
-.scrollable {
-  overflow-y: auto;
-  max-height: 300px;
+.feedback_form_email {
+  resize: none;
 }
 
 .btn {

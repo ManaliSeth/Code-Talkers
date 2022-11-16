@@ -50,7 +50,7 @@ const Login = () => {
 
           <div className="form-class">
             <Form>
-              <Form.Group className="form-group" controlId="email">
+              <Form.Group className="mb-3" controlId="email">
                 <Form.Control
                   type="email"
                   name="email"
@@ -61,7 +61,7 @@ const Login = () => {
                 />
               </Form.Group>
 
-              <Form.Group className='mb-3' controlId="password">
+              <Form.Group className="mb-3" controlId="password">
                 <Form.Control
                   type="password"
                   name="password"
@@ -71,16 +71,16 @@ const Login = () => {
                   required
                 />
               </Form.Group>
-
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                onClick={handleSubmit}
-              >
-                Login
-              </Button>
-  
+              <div className="mx-3">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  onClick={handleSubmit}
+                >
+                  Login
+                </Button>
+              </div>
             </Form>
           </div>
         </div>
