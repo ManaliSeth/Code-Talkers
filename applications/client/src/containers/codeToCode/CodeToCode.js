@@ -9,7 +9,7 @@ import StarRating from "../../components/StarRating";
 const { Configuration, OpenAIApi } = require("openai");
 
 const CodeToCode = () => {
-  const { state, dispatch } = useContext(UserContext);
+  // const { state, dispatch } = useContext(UserContext);
   const [response, setResponse] = useState("");
   const [dropdownValue1, setDropdownValue1] = useState("Python");
   const [dropdownValue2, setDropdownValue2] = useState("Java");
@@ -37,7 +37,7 @@ const CodeToCode = () => {
     userRating: null,
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const callCodeToCode = async () => {
     try {
@@ -54,7 +54,7 @@ const CodeToCode = () => {
       console.log(data);
       setUserDetails(data);
 
-      dispatch({ type: "USER", payload: true });
+      // dispatch({ type: "USER", payload: true });
 
       if (!res.status === 200) {
         const error = new Error(res.error);
@@ -62,7 +62,7 @@ const CodeToCode = () => {
       }
     } catch (error) {
       console.log(error);
-      navigate("/login");
+      // navigate("/login");
     }
   };
 
@@ -177,7 +177,7 @@ const CodeToCode = () => {
       <br />
       <br />
 
-      <Form onSubmit={onFormSubmit}>
+      <Form onSubmit={onFormSubmit} data-testid="code-form">
         <Row>
           <Col className="col-md-6">
             <Form.Group className="mb-3">
@@ -189,6 +189,7 @@ const CodeToCode = () => {
                 onChange={handleDropdown1}
                 className="form-control"
                 id="progLang1"
+                data-testid="dropdown1"
               >
                 <option value="Python">Python</option>
                 <option value="Java">Java</option>
@@ -211,6 +212,7 @@ const CodeToCode = () => {
                 onChange={handleDropdown2}
                 className="form-control"
                 id="progLang2"
+                data-testid="dropdown2"
               >
                 <option value="Java">Java</option>
                 <option value="Python">Python</option>
@@ -243,7 +245,7 @@ const CodeToCode = () => {
             </Form.Group>
 
             <Button variant="primary" size="lg" type="submit">
-              Get AI Suggestions
+              Translate Code
             </Button>
 
             <Form.Group>
@@ -255,7 +257,7 @@ const CodeToCode = () => {
 
           <Col className="col-md-6">
             <h5>Result: {dropdownValue2} code</h5>
-            <Card style={{ height: "305px", overflow: "auto" }}>
+            <Card style={{ height: "305px", overflow: "auto" }} data-testid="card">
               <Card.Body>
                 <Card.Text>
                   <pre>{response}</pre>
@@ -271,7 +273,7 @@ const CodeToCode = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback}>
+            <Form onSubmit={submitFeedback} data-testid="feedback-form">
               <Form.Group method="POST" className="mb-3">
                 <Form.Group className="mb-3">
                   <Form.Label>Enter your registered email</Form.Label>
