@@ -10,7 +10,7 @@ import "../../index.css";
 
 const Home = () => {
   return (
-    <div className="div-container">
+    <div className="div-container" data-testid={"home-1"}>
       <br />
       <div className="div-containerrow">
         <h1> CSC 890 Graduate Seminar Project</h1>

@@ -3,12 +3,11 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 import accountImg from "../../assets/Account/account.svg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./account.css";
 import { Form, Button } from "react-bootstrap";
 
 const Register = () => {
-  const [data, setData] = useState({
+  const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -16,27 +15,29 @@ const Register = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
+    setUser({ ...user, [input.name]: input.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const url = "/api/users";
-      const { data: res } = await axios.post(url, data);
+    const { firstName, lastName, email, userType, password } = user;
+    const res = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ firstName, lastName, email, userType, password }),
+    });
+    const data = await res.json();
+    if (data.status === 422 || !data) {
+      window.alert("Invalid Registration");
+      console.log("Invalid Registration");
+    } else {
+      window.alert("Login Successful!");
+      console.log("Registration Successfull!");
       navigate("/login");
-      console.log(res.message);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
     }
   };
   return (
@@ -56,7 +57,7 @@ const Register = () => {
                   name="firstName"
                   placeholder="First Name"
                   onChange={handleChange}
-                  value={data.firstName}
+                  value={user.firstName}
                   required
                 />
               </Form.Group>
@@ -67,7 +68,7 @@ const Register = () => {
                   name="lastName"
                   placeholder="Last Name"
                   onChange={handleChange}
-                  value={data.lastName}
+                  value={user.lastName}
                   required
                 />
               </Form.Group>
@@ -78,7 +79,7 @@ const Register = () => {
                   name="email"
                   placeholder="Email"
                   onChange={handleChange}
-                  value={data.email}
+                  value={user.email}
                   required
                 />
               </Form.Group>
@@ -89,7 +90,7 @@ const Register = () => {
                   name="password"
                   placeholder="Password"
                   onChange={handleChange}
-                  value={data.password}
+                  value={user.password}
                   required
                 />
               </Form.Group>
@@ -98,7 +99,7 @@ const Register = () => {
                 <Form.Select
                   name="userType"
                   onChange={handleChange}
-                  value={data.userType}
+                  value={user.userType}
                   required
                   autoFocus
                 >
@@ -110,7 +111,6 @@ const Register = () => {
               </Form.Group>
 
               <br />
-              {error && <div className="error_message">{error}</div>}
               <div className="mx-3">
                 <Button type="submit" variant="primary" size="lg">
                   Register

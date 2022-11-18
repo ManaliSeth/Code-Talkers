@@ -32,14 +32,12 @@ const Login = () => {
       console.log("Invalid Credentials");
     } else {
       dispatch({ type: "USER", payload: true });
-      // window.alert("Login Successful!");
       console.log("Login Successfull!");
       navigate("/");
-      // window.location = "/";
     }
   };
   return (
-    <div className="base-container">
+    <div className="base-container" data-testid="login-1">
       <span className="box square border border-dark">
         <div className="header">Login</div>
 
