@@ -9,7 +9,7 @@ import StarRating from "../../components/StarRating";
 const { Configuration, OpenAIApi } = require("openai");
 
 const TextToCode = () => {
-  const { state, dispatch } = useContext(UserContext);
+  // const { state, dispatch } = useContext(UserContext);
   const [response, setResponse] = useState("");
   const [dropdownValue, setDropdownValue] = useState("Python");
   const [rating, setRating] = useState(null);
@@ -36,7 +36,7 @@ const TextToCode = () => {
     userRating: null,
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const callTextToCode = async () => {
     try {
@@ -53,7 +53,7 @@ const TextToCode = () => {
 
       setUserDetails(data);
 
-      dispatch({ type: "USER", payload: true });
+      // dispatch({ type: "USER", payload: true });
 
       if (!res.status === 200) {
         const error = new Error(res.error);
@@ -61,7 +61,7 @@ const TextToCode = () => {
       }
     } catch (error) {
       console.log(error);
-      navigate("/login");
+      // navigate("/login");
     }
   };
 
@@ -169,7 +169,7 @@ const TextToCode = () => {
       <br />
       <br />
 
-      <Form onSubmit={onFormSubmit}>
+      <Form onSubmit={onFormSubmit} data-testid="code-form">
         <Row>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="progLang">
@@ -181,9 +181,9 @@ const TextToCode = () => {
               className="form-control"
               id="progLang"
             >
-              <option value="Python">Python</option>
-              <option value="Java">Java</option>
-              <option value="C++">C++</option>
+              <option name="language" value="Python">Python</option>
+              <option name="language" value="Java">Java</option>
+              <option name="language" value="C++">C++</option>
             </Form.Select>
           </Form.Group>
         </Row>
@@ -211,7 +211,7 @@ const TextToCode = () => {
             </Form.Group>
 
             <Button variant="primary" size="lg" type="submit">
-              Get AI Suggestions
+              Generate Code
             </Button>
 
             <Form.Group>
@@ -223,7 +223,7 @@ const TextToCode = () => {
 
           <Col className="col-md-6">
             <h5>Result: {dropdownValue} code</h5>
-            <Card style={{ height: "305px", overflow: "auto" }}>
+            <Card style={{ height: "305px", overflow: "auto" }} data-testid="card">
               <Card.Body>
                 <br />
                 <Card.Text>
@@ -241,8 +241,7 @@ const TextToCode = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback} method="POST">
-              {/* <Form.Group className="mb-3"> */}
+            <Form onSubmit={submitFeedback} method="POST" data-testid="feedback-form">
               <Form.Group className="mb-3">
                 <Form.Label>Enter your registered email</Form.Label>
                 <Form.Control
@@ -318,13 +317,11 @@ const TextToCode = () => {
                   })}
                 </div>
               </Form.Group>
-              {/* </Form.Group> */}
 
               <Button
                 variant="primary"
                 size="lg"
                 type="submit"
-                // onSubmit={submitFeedback}
               >
                 Submit Feedback
               </Button>
