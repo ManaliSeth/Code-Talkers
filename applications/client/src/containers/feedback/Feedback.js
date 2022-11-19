@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 
 const Feedback = () => {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [feedbacks, setFeedbacks] = useState([]);
 
@@ -28,7 +28,7 @@ const Feedback = () => {
       }
     } catch (error) {
       console.log(error);
-      navigate("/login");
+      // navigate("/login");
     }
   };
 
@@ -43,7 +43,7 @@ const Feedback = () => {
       </div>
       <br />
       
-      <Table bordered hover striped responsive variant="dark">
+      <Table bordered hover striped responsive variant="dark" data-testid="feedback-table">
         <thead>
           <tr>
             <th>Email</th>
@@ -54,14 +54,14 @@ const Feedback = () => {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody role="table-rows">
           {
             feedbacks.map(userFeedback => {
               return (
                 <>
                   {userFeedback.feedbacks && userFeedback.feedbacks.map((feedback) => {
                     return (
-                    <tr>
+                    <tr> 
                       <td>{feedback.email}</td>
                       <td>{feedback.question}</td>
                       <td>{feedback.answer}</td>
