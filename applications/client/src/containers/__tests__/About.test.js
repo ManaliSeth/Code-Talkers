@@ -40,7 +40,6 @@ test("render Team Member 2 info", () => {
   );
   const name = screen.getByText(/Manali Seth/i);
   const role = screen.getByText(/Github Master/i);
-  const member2Element = [name, role];
 
   expect(screen.getByText("mseth@mail.sfsu.edu").closest("a")).toHaveAttribute(
     "href",
@@ -50,7 +49,8 @@ test("render Team Member 2 info", () => {
     "href",
     "https://github.com/ManaliSeth"
   );
-  expect(member2Element).toBeInTheDocument();
+  expect(name).toBeInTheDocument();
+  expect(role).toBeInTheDocument();
 });
 
 test("should render Image1", () => {

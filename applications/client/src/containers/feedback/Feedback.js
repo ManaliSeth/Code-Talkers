@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 
 const Feedback = () => {
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [feedbacks, setFeedbacks] = useState([]);
 
@@ -28,7 +28,7 @@ const Feedback = () => {
       }
     } catch (error) {
       console.log(error);
-      // navigate("/login");
+      navigate("/login");
     }
   };
 

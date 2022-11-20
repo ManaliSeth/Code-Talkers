@@ -1,21 +1,33 @@
-import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+import { render, screen} from "@testing-library/react";
 import Feedback from "../feedback/Feedback";
-import { Table } from "react-bootstrap";
+import { BrowserRouter as Router } from "react-router-dom";
 
 test("renders feedback table", () => {
-  render(<Feedback />);
+  render(
+    <Router>
+      <Feedback />
+    </Router>
+  );
   const table = screen.getByTestId("feedback-table");
-  expect(table).toBeInTheDocument();
+  expect(table).isInTheDocument;
 });
 
 test("renders header in Feedback Table", () => {
-  render(<Feedback />);
+  render(
+    <Router>
+      <Feedback />
+    </Router>
+  );
   const headers = screen.getAllByRole("columnheader");
-  expect(headers).toBeInTheDocument();
+  expect(headers).isInTheDocument;
 });
 
 test("renders rows in Feedback Table", () => {
-  render(<Feedback />);
+  render(
+    <Router>
+      <Feedback />
+    </Router>
+  );
   const rows = screen.getAllByRole("table-rows");
-  expect(rows).toBeInTheDocument();
+  expect(rows).isInTheDocument;
 });

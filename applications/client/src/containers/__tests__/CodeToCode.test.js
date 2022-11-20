@@ -1,37 +1,53 @@
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CodeToCode from "../codeToCode/CodeToCode";
-
-test("should display dropdown, input and output boxes, buttons, feedback form ", () => {
-  render(<CodeToCode />);
-  screen.debug();
-});
+import { BrowserRouter as Router } from "react-router-dom";
 
 test("render Code Form", () => {
-  const { getByTestId } = render(<CodeToCode />);
+  const { getByTestId } = render(
+    <Router>
+      <CodeToCode />
+    </Router>
+  );
   const codeForm = getByTestId("code-form");
   expect(codeForm).toBeDefined();
 });
 
-test("render Feedback Form", () => {
-  const { getByTestId } = render(<CodeToCode />);
-  const feedbackForm = getByTestId("feedback-form");
-  expect(feedbackForm).toBeDefined();
-});
-
 test("render Card", () => {
-  const { getByTestId } = render(<CodeToCode />);
+  const { getByTestId } = render(
+    <Router>
+      <CodeToCode />
+    </Router>
+  );
   const card = getByTestId("card");
   expect(card).toBeDefined();
 });
 
+test("render Feedback Form", () => {
+  const { getByTestId } = render(
+    <Router>
+      <CodeToCode />
+    </Router>
+  );
+  const feedbackForm = getByTestId("feedback-form");
+  expect(feedbackForm).toBeDefined();
+});
+
 test("should give input box", () => {
-  render(<CodeToCode />);
+  render(
+    <Router>
+      <CodeToCode />
+    </Router>
+  );
   screen.getAllByPlaceholderText("Source code");
 });
 
 const setup = () => {
-  const utils = render(<CodeToCode />);
+  const utils = render(
+    <Router>
+      <CodeToCode />
+    </Router>
+  );
   const input = utils.getByPlaceholderText("Source code");
   return {
     input,
@@ -46,17 +62,25 @@ test("It should allow question/text to be inputted", () => {
   expect(input.value).toBe("Good Day");
 });
 
-it("does not trigger when required fields are empty for code form", async () => {
+test("does not trigger when required fields are empty for code form", async () => {
   const onSubmit = jest.fn();
-  render(<CodeToCode />);
+  render(
+    <Router>
+      <CodeToCode />
+    </Router>
+  );
   const submitButton = screen.getByText("Translate Code");
   await waitFor(() => userEvent.click(submitButton));
   expect(onSubmit).toHaveBeenCalledTimes(0);
 });
 
-it("does not trigger when required fields are empty for feedback form", async () => {
+test("does not trigger when required fields are empty for feedback form", async () => {
   const onSubmit = jest.fn();
-  render(<CodeToCode />);
+  render(
+    <Router>
+      <CodeToCode />
+    </Router>
+  );
   const submitButton = screen.getByText("Submit Feedback");
   await waitFor(() => userEvent.click(submitButton));
   expect(onSubmit).toHaveBeenCalledTimes(0);

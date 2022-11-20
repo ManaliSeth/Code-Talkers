@@ -1,24 +1,23 @@
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TextToCode from "../textToCode/TextToCode";
+import { BrowserRouter as Router } from "react-router-dom";
 
-test("should display dropdown, input and output boxes, buttons, feedback form ", () => {
-  render(<TextToCode />);
-  screen.debug();
-});
-
-it("should correctly set default option", () => {
-  render(<TextToCode />);
-  expect(screen.getByRole("option", { name: "Python" }).selected).toBe(true);
-});
-
-it("should display the correct number of options", () => {
-  render(<TextToCode />);
+test("should display the correct number of options", () => {
+  render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   expect(screen.getAllByRole("option").length).toBe(3);
 });
 
-it("should allow user to change programming langage", () => {
-  render(<TextToCode />);
+test("should allow user to change programming langage", () => {
+  render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   userEvent.selectOptions(
     // Find the select element, like a real user would.
     screen.getByRole("combobox"),
@@ -29,30 +28,50 @@ it("should allow user to change programming langage", () => {
 });
 
 test("render Code Form", () => {
-  const { getByTestId } = render(<TextToCode />);
+  const { getByTestId } = render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   const codeForm = getByTestId("code-form");
   expect(codeForm).toBeDefined();
 });
 
-test("render Feedback Form", () => {
-  const { getByTestId } = render(<TextToCode />);
-  const feedbackForm = getByTestId("feedback-form");
-  expect(feedbackForm).toBeDefined();
-});
-
 test("render Card", () => {
-  const { getByTestId } = render(<TextToCode />);
+  const { getByTestId } = render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   const card = getByTestId("card");
   expect(card).toBeDefined();
 });
 
+test("render Feedback Form", () => {
+  const { getByTestId } = render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
+  const feedbackForm = getByTestId("feedback-form");
+  expect(feedbackForm).toBeDefined();
+});
+
 test("should give input box", () => {
-  render(<TextToCode />);
+  render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   screen.getAllByPlaceholderText("Enter your question");
 });
 
 const setup = () => {
-  const utils = render(<TextToCode />);
+  const utils = render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   const input = utils.getByPlaceholderText("Enter your question");
   return {
     input,
@@ -67,17 +86,25 @@ test("It should allow question/text to be inputted", () => {
   expect(input.value).toBe("Good Day");
 });
 
-it("does not trigger when required fields are empty for code form", async () => {
+test("does not trigger when required fields are empty for code form", async () => {
   const onSubmit = jest.fn();
-  render(<TextToCode />);
+  render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   const submitButton = screen.getByText("Generate Code");
   await waitFor(() => userEvent.click(submitButton));
   expect(onSubmit).toHaveBeenCalledTimes(0);
 });
 
-it("does not trigger when required fields are empty for feedback form", async () => {
+test("does not trigger when required fields are empty for feedback form", async () => {
   const onSubmit = jest.fn();
-  render(<TextToCode />);
+  render(
+    <Router>
+      <TextToCode />
+    </Router>
+  );
   const submitButton = screen.getByText("Submit Feedback");
   await waitFor(() => userEvent.click(submitButton));
   expect(onSubmit).toHaveBeenCalledTimes(0);

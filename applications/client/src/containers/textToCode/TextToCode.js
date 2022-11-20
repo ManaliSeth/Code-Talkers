@@ -36,7 +36,7 @@ const TextToCode = () => {
     userRating: null,
   });
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const callTextToCode = async () => {
     try {
@@ -48,7 +48,6 @@ const TextToCode = () => {
         },
         credentials: "include",
       });
-      // console.log(res);
       const data = await res.json();
 
       setUserDetails(data);
@@ -61,7 +60,7 @@ const TextToCode = () => {
       }
     } catch (error) {
       console.log(error);
-      // navigate("/login");
+      navigate("/login");
     }
   };
 
@@ -225,10 +224,7 @@ const TextToCode = () => {
             <h5>Result: {dropdownValue} code</h5>
             <Card style={{ height: "305px", overflow: "auto" }} data-testid="card">
               <Card.Body>
-                <br />
-                <Card.Text>
-                  <pre>{response}</pre>
-                </Card.Text>
+                <pre>{response}</pre>
               </Card.Body>
             </Card>
           </Col>
@@ -252,6 +248,7 @@ const TextToCode = () => {
                   name="email"
                   className="feedback_form_email"
                   rows={1}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -265,6 +262,7 @@ const TextToCode = () => {
                   placeholder="Question"
                   className="feedback_form_question"
                   rows={5}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -278,6 +276,7 @@ const TextToCode = () => {
                   placeholder="Answer Generated"
                   className="feedback_form_answer"
                   rows={5}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -304,6 +303,7 @@ const TextToCode = () => {
                   {[1, 2, 3, 4, 5].map((ratingValue) => {
                     return (
                       <StarRating
+                        key={ratingValue}
                         ratingValue={ratingValue}
                         hover={hover}
                         rating={rating}
