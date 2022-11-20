@@ -35,7 +35,7 @@ const Register = () => {
       window.alert("Invalid Registration");
       console.log("Invalid Registration");
     } else {
-      window.alert("Login Successful!");
+      window.alert("Registration Successfull!");
       console.log("Registration Successfull!");
       navigate("/login", { replace: true });
     }

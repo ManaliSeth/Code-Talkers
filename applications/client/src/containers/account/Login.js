@@ -9,6 +9,7 @@ import { Form, Button } from "react-bootstrap";
 
 const Login = () => {
   const { state, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,8 +33,9 @@ const Login = () => {
       console.log("Invalid Credentials");
     } else {
       dispatch({ type: "USER", payload: true });
+      window.alert("Login Successfull!");
       console.log("Login Successfull!");
-      navigate("/");
+      navigate("/", { replace: true });
     }
   };
   return (
