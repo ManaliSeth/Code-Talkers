@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
-import { UserContext } from "../../App";
+// import { UserContext } from "../../App";
 import StarRating from "../../components/StarRating";
 
 const { Configuration, OpenAIApi } = require("openai");
@@ -59,7 +59,6 @@ const TextToCode = () => {
         throw error;
       }
     } catch (error) {
-      console.log(error);
       navigate("/login");
     }
   };
@@ -75,11 +74,8 @@ const TextToCode = () => {
   const onFormSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Chosen programming language:", dropdownValue);
-
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj.question);
 
     //OPENAI
 
@@ -124,8 +120,6 @@ const TextToCode = () => {
 
     const { email, question, answer, feedback, userRating } = userData;
 
-    console.log(userData);
-
     const res = await fetch("/api/auth/TextToCode", {
       method: "POST",
       headers: {
@@ -142,7 +136,7 @@ const TextToCode = () => {
 
     const data = await res.json();
     if (!data) {
-      console.log("Feedback not sent");
+      alert("Feedback not sent");
     } else {
       alert("Feedback sent successfully");
       setUserData({
@@ -179,10 +173,11 @@ const TextToCode = () => {
               onChange={handleDropdown}
               className="form-control"
               id="progLang"
+              data-testid='select'
             >
-              <option name="language" value="Python">Python</option>
-              <option name="language" value="Java">Java</option>
-              <option name="language" value="C++">C++</option>
+              <option name="language" value="Python" data-testid='select-option'>Python</option>
+              <option name="language" value="Java" data-testid='select-option'>Java</option>
+              <option name="language" value="C++" data-testid='select-option'>C++</option>
             </Form.Select>
           </Form.Group>
         </Row>
@@ -307,7 +302,6 @@ const TextToCode = () => {
                         ratingValue={ratingValue}
                         hover={hover}
                         rating={rating}
-                        userData={userData}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         onClick={onClick}

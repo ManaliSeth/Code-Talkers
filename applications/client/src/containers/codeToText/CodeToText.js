@@ -48,7 +48,7 @@ const CodeToText = () => {
       });
       const data = await res.json();
       setUserDetails(data);
-      dispatch({ type: "USER", payload: true });
+      // dispatch({ type: "USER", payload: true });
       if (!res.status === 200) {
         const error = new Error(res.error);
         throw error;

@@ -50,7 +50,6 @@ const CodeToCode = () => {
         credentials: "include",
       });
       const data = await res.json();
-      console.log(data);
       setUserDetails(data);
 
       // dispatch({ type: "USER", payload: true });
@@ -60,7 +59,6 @@ const CodeToCode = () => {
         throw error;
       }
     } catch (error) {
-      console.log(error);
       navigate("/login");
     }
   };
@@ -80,12 +78,8 @@ const CodeToCode = () => {
   const onFormSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Chosen programming language to convert from:", dropdownValue1);
-    console.log("Chosen programming language to convert to:", dropdownValue2);
-
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj.question);
 
     //OPENAI
 
@@ -125,7 +119,6 @@ const CodeToCode = () => {
     const value = e.target.value;
 
     setUserData({ ...userData, [name]: value });
-    console.log("userData:", userData);
   };
 
   const submitFeedback = async (e) => {
@@ -133,7 +126,6 @@ const CodeToCode = () => {
 
     const { email, question, answer, feedback, userRating } = userData;
 
-    console.log("hello from submit feedback");
     const res = await fetch("/api/auth/CodeToCode", {
       method: "POST",
       headers: {
@@ -150,7 +142,7 @@ const CodeToCode = () => {
 
     const data = await res.json();
     if (!data) {
-      console.log("Feedback not sent");
+      alert('Feedback not sent')
     } else {
       alert("Feedback sent successfully");
       setUserData({
