@@ -15,7 +15,7 @@ class AboutManali extends Component {
               </span>
             </div>
 
-            <div className="profile-details-role">
+            <div className="profile-details-role" role="introduction">
               <span className="profile-role-tagline">
                 Love building applications with frontend and backend operations.{" "}
               </span>
@@ -30,13 +30,21 @@ class AboutManali extends Component {
             <div className="profile-details-colz">
               <p>
                 Email:
-                <a href="mailto:mseth@mail.sfsu.edu" className="link-info">
+                <a
+                  href="mailto:mseth@mail.sfsu.edu"
+                  className="link-info"
+                  role="email"
+                >
                   mseth@mail.sfsu.edu
                 </a>
               </p>
               <p>
                 Github Username:
-                <a href="https://github.com/ManaliSeth" className="link-info">
+                <a
+                  href="https://github.com/ManaliSeth"
+                  className="link-info"
+                  role="github"
+                >
                   Manali-Seth
                 </a>
               </p>
