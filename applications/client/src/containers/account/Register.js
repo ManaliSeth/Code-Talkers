@@ -37,11 +37,11 @@ const Register = () => {
     } else {
       window.alert("Login Successful!");
       console.log("Registration Successfull!");
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   };
   return (
-    <div className="base-container">
+    <div className="base-container" data-testid="testing">
       <span className="box square border border-dark">
         <div className="header">Register</div>
         <div className="content">
