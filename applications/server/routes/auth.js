@@ -51,6 +51,20 @@ const validate = (data) => {
   return schema.validate(data);
 };
 
+router.get("/getUserType", authenticate, async (req, res) => {
+  try {
+    const loggedInUser = req.rootUser;
+    console.log("loggedInUser", loggedInUser);
+    if (loggedInUser) {
+      req.user = loggedInUser;
+      res.send(req.user);
+    }
+  } catch (error) {
+    console.log("Error", error);
+  }
+});
+
+
 //code to Text page after login
 
 router.get("/codeToText", authenticate, (req, res) => {
@@ -61,14 +75,20 @@ router.get("/codeToText", authenticate, (req, res) => {
 
 //code to text add feedback
 router.post("/codeToText", authenticate, async (req, res) => {
-  const { email, question, answer, feedback } = req.body;
-  if (!email || !question || !answer || !feedback) {
+  const { email, question, answer, feedback, userRating } = req.body;
+  if (!email || !question || !answer || !feedback || !userRating) {
     return res.status(422).json({ error: "Please add all the details" });
   }
   try {
     const userFeedbackForm = await User.findOne({ _id: req.userID });
     if (userFeedbackForm) {
-      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+      await userFeedbackForm.addFeedback(
+        email,
+        question,
+        answer,
+        feedback,
+        userRating
+      );
 
       await userFeedbackForm.save();
 
@@ -76,7 +96,6 @@ router.post("/codeToText", authenticate, async (req, res) => {
     }
   } catch (error) {}
 });
-
 
 // Text to Code page after login
 router.get("/textToCode", authenticate, (req, res) => {
@@ -87,14 +106,21 @@ router.get("/textToCode", authenticate, (req, res) => {
 
 // Text to Code add feedback
 router.post("/textToCode", authenticate, async (req, res) => {
-  const { email, question, answer, feedback } = req.body;
-  if (!email || !question || !answer || !feedback) {
+  const { email, question, answer, feedback, userRating } = req.body;
+  console.log("Inside Auth", userRating);
+  if (!email || !question || !answer || !feedback || !userRating) {
     return res.status(422).json({ error: "Please add all the details" });
   }
   try {
     const userFeedbackForm = await User.findOne({ _id: req.userID });
     if (userFeedbackForm) {
-      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+      await userFeedbackForm.addFeedback(
+        email,
+        question,
+        answer,
+        feedback,
+        userRating
+      );
 
       await userFeedbackForm.save();
 
@@ -102,7 +128,6 @@ router.post("/textToCode", authenticate, async (req, res) => {
     }
   } catch (error) {}
 });
-
 
 // Code to Code page after login
 router.get("/codeToCode", authenticate, (req, res) => {
@@ -113,14 +138,20 @@ router.get("/codeToCode", authenticate, (req, res) => {
 
 // Code to Code add feedback
 router.post("/codeToCode", authenticate, async (req, res) => {
-  const { email, question, answer, feedback } = req.body;
-  if (!email || !question || !answer || !feedback) {
+  const { email, question, answer, feedback, userRating } = req.body;
+  if (!email || !question || !answer || !feedback || !userRating) {
     return res.status(422).json({ error: "Please add all the details" });
   }
   try {
     const userFeedbackForm = await User.findOne({ _id: req.userID });
     if (userFeedbackForm) {
-      await userFeedbackForm.addFeedback(email, question, answer, feedback);
+      await userFeedbackForm.addFeedback(
+        email,
+        question,
+        answer,
+        feedback,
+        userRating
+      );
 
       await userFeedbackForm.save();
 
@@ -129,20 +160,18 @@ router.post("/codeToCode", authenticate, async (req, res) => {
   } catch (error) {}
 });
 
-
 // Get feedback
 router.get("/feedback", authenticate, async (req, res) => {
   try {
-    const userFeedback = await User.find({}, {feedbacks:1,_id:0})
+    const userFeedback = await User.find({}, { feedbacks: 1, _id: 0 });
     if (userFeedback) {
-      console.log("userFeedback: ", userFeedback)
+      console.log("userFeedback: ", userFeedback);
       // res.status(201).json({ message: "User feedback retrieved successfully" });
-      req.userFeedback= userFeedback
-      res.send(req.userFeedback)
+      req.userFeedback = userFeedback;
+      res.send(req.userFeedback);
     }
   } catch (error) {}
 });
-
 
 // for logout
 router.get("/logout", async (req, res) => {

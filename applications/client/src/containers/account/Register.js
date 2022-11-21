@@ -50,7 +50,7 @@ const Register = () => {
 
           <div className="form-class">
             <Form onSubmit={handleSubmit}>
-              <Form.Group className='mb-3' controlId='firstName'>
+              <Form.Group className="mb-3" controlId="firstName">
                 <Form.Control
                   type="text"
                   name="firstName"
@@ -61,7 +61,7 @@ const Register = () => {
                 />
               </Form.Group>
 
-              <Form.Group className='mb-3' controlId='lastName'>
+              <Form.Group className="mb-3" controlId="lastName">
                 <Form.Control
                   type="text"
                   name="lastName"
@@ -72,7 +72,7 @@ const Register = () => {
                 />
               </Form.Group>
 
-              <Form.Group className='mb-3' controlId='email'>
+              <Form.Group className="mb-3" controlId="email">
                 <Form.Control
                   type="email"
                   name="email"
@@ -83,7 +83,7 @@ const Register = () => {
                 />
               </Form.Group>
 
-              <Form.Group className='mb-3' controlId='password'>
+              <Form.Group className="mb-3" controlId="password">
                 <Form.Control
                   type="password"
                   name="password"
@@ -94,7 +94,7 @@ const Register = () => {
                 />
               </Form.Group>
 
-              <Form.Group className='mb-3' controlId='userType'>
+              <Form.Group className="mx-3" controlId="userType">
                 <Form.Select
                   name="userType"
                   onChange={handleChange}
@@ -102,7 +102,7 @@ const Register = () => {
                   required
                   autoFocus
                 >
-                  <option value="">Select One</option>
+                  <option value="">Select Role</option>
                   <option>Student</option>
                   <option>Professor</option>
                   <option>Employee</option>
@@ -111,10 +111,11 @@ const Register = () => {
 
               <br />
               {error && <div className="error_message">{error}</div>}
-              <Button type="submit" variant="primary" size="lg">
-                Register
-              </Button>
-
+              <div className="mx-3">
+                <Button type="submit" variant="primary" size="lg">
+                  Register
+                </Button>
+              </div>
             </Form>
           </div>
         </div>
