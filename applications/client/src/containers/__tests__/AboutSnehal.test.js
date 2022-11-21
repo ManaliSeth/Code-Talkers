@@ -7,16 +7,19 @@ test("render introduction", () => {
   const introElement = screen.getByRole("introduction");
   expect(introElement).toBeInTheDocument();
 });
+
 test("render email", () => {
   render(<AboutSnehal />);
   const codeToCodeElement = screen.getByRole("email");
   expect(codeToCodeElement).toBeInTheDocument();
 });
+
 test("render github", () => {
   render(<AboutSnehal />);
   const textToCodeElement = screen.getByRole("github");
   expect(textToCodeElement).toBeInTheDocument();
 });
+
 test("should render Snehal Image", () => {
   render(<AboutSnehal />);
   const imageElement = screen.getByAltText("SnehalImage");

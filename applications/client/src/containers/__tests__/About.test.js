@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import About from "../about/About";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -71,4 +72,28 @@ test("should render Image2", () => {
   );
   const imageElement = screen.getByAltText("Image2");
   expect(imageElement).toHaveAttribute("src", "manali.png");
+});
+
+test(" Render Snehal's profile page when button is clicked ", async () => {
+  render(
+    <Router>
+      <About />
+    </Router>
+  );
+  userEvent.click(screen.getByTestId('button1'));
+  await waitFor(() => {
+    expect(screen.getByText(/Snehal Patil/i)).toBeInTheDocument()
+  })
+});
+
+test(" Render Manali's profile page when button is clicked ", async () => {
+  render(
+    <Router>
+      <About />
+    </Router>
+  );
+  userEvent.click(screen.getByTestId('button2'));
+  await waitFor(() => {
+    expect(screen.getByText(/Manali Seth/i)).toBeInTheDocument()
+  })
 });

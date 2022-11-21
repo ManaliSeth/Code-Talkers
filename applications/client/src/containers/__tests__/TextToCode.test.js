@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, waitFor, getByTestId } from "@testing-library/react";
+import { render, fireEvent, screen, waitFor} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TextToCode from "../textToCode/TextToCode";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -98,21 +98,6 @@ test("It should allow question/text to be inputted", () => {
   fireEvent.change(input, { target: { value: "" } });
   expect(input.value).toBe("");
 });
-
-// test("use state check", () => {
-//   const setStateMock = jest.fn();
-//   const useStateMock = [useState, setStateMock];
-//   jest.spyOn(React, 'useState').mockImplementation(useStateMock);
-
-//   const { getByTestId } = render(
-//     <Router>
-//       <TextToCode/>
-//     </Router>
-//   );
-//   input = getByTestId('star-rate')
-//   fireEvent.click(input); 
-//   expect(setStateMock.toHaveBeenCalledTimes(1));
-// });
 
 test("does not trigger when required fields are empty for code form", async () => {
   const onSubmit = jest.fn();

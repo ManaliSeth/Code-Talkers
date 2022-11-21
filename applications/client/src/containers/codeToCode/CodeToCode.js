@@ -9,7 +9,7 @@ import StarRating from "../../components/StarRating";
 const { Configuration, OpenAIApi } = require("openai");
 
 const CodeToCode = () => {
-  // const { state, dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const [response, setResponse] = useState("");
   const [dropdownValue1, setDropdownValue1] = useState("Python");
   const [dropdownValue2, setDropdownValue2] = useState("Java");
@@ -52,7 +52,7 @@ const CodeToCode = () => {
       const data = await res.json();
       setUserDetails(data);
 
-      // dispatch({ type: "USER", payload: true });
+      dispatch({ type: "USER", payload: true });
 
       if (!res.status === 200) {
         const error = new Error(res.error);

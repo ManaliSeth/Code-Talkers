@@ -10,7 +10,7 @@ const { Configuration, OpenAIApi } = require("openai");
 
 const CodeToText = () => {
   const navigate = useNavigate();
-  // const { state, dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const [response, setResponse] = useState("");
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
@@ -48,7 +48,7 @@ const CodeToText = () => {
       });
       const data = await res.json();
       setUserDetails(data);
-      // dispatch({ type: "USER", payload: true });
+      dispatch({ type: "USER", payload: true });
       if (!res.status === 200) {
         const error = new Error(res.error);
         throw error;

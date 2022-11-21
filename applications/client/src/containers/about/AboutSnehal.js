@@ -3,6 +3,7 @@ import "../../index.css";
 import Image from "react-bootstrap/Image";
 import snehal from "../../assets/About/snehal.png";
 import { Component } from "react";
+
 class AboutSnehal extends Component {
   render() {
     return (

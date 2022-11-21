@@ -1,5 +1,6 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen , waitFor} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Home from "../home/Home";
 
 test("renders Welcome Text", () => {
@@ -37,3 +38,24 @@ test("should render Image3", () => {
   const imageElement = screen.getByAltText("Image3");
   expect(imageElement).toHaveAttribute("src", "3.png");
 });
+test('simulate Code To Text button click', async () => {
+  render(<Home />);
+  userEvent.click(screen.getByTestId('button1'));
+  await waitFor(() => {
+    expect(screen.getByText(/Code To Text/i)).toBeInTheDocument()
+  })
+})
+test('simulate Text To Code button click', async () => {
+  render(<Home />);
+  userEvent.click(screen.getByTestId('button2'));
+  await waitFor(() => {
+    expect(screen.getByText(/Text To Code/i)).toBeInTheDocument()
+  })
+})
+test('simulate Code to Code button click', async () => {
+  render(<Home />);
+  userEvent.click(screen.getByTestId('button3'));
+  await waitFor(() => {
+    expect(screen.getByText(/Code To Code/i)).toBeInTheDocument()
+  })
+})

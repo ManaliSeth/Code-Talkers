@@ -3,13 +3,13 @@ import { Container, Form, Button, Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
-// import { UserContext } from "../../App";
+import { UserContext } from "../../App";
 import StarRating from "../../components/StarRating";
 
 const { Configuration, OpenAIApi } = require("openai");
 
 const TextToCode = () => {
-  // const { state, dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const [response, setResponse] = useState("");
   const [dropdownValue, setDropdownValue] = useState("Python");
   const [rating, setRating] = useState(null);
@@ -52,7 +52,7 @@ const TextToCode = () => {
 
       setUserDetails(data);
 
-      // dispatch({ type: "USER", payload: true });
+      dispatch({ type: "USER", payload: true });
 
       if (!res.status === 200) {
         const error = new Error(res.error);

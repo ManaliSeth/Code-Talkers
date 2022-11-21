@@ -46,8 +46,8 @@ const About = () => {
             <br />
             <div className="profile-options">
               <Link to="/AboutSnehal">
-                <button className="btn highlighted-btn">
-                  <h4> About Me! </h4>
+                <button className="btn highlighted-btn" data-testid="button1">
+                 <h4>About Me!</h4>
                 </button>
               </Link>
             </div>
@@ -81,8 +81,8 @@ const About = () => {
             <br />
             <div className="profile-options">
               <Link to="/AboutManali">
-                <button className="btn highlighted-btn">
-                  <h4> About Me! </h4>
+                <button className="btn highlighted-btn" data-testid="button2">
+                  <h4>About Me!</h4>
                 </button>
               </Link>
             </div>
