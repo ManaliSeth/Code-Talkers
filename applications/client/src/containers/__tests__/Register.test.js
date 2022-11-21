@@ -12,7 +12,6 @@ test("renders register page", async () => {
   );
   const registerElement = screen.getByTestId("testing");
   expect(registerElement).toBeInTheDocument();
-  // your tests...
 });
 
 test("should render Register Image", () => {
