@@ -9,6 +9,7 @@ import StarRating from "../../components/StarRating";
 const { Configuration, OpenAIApi } = require("openai");
 
 const CodeToText = () => {
+  const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
   const [response, setResponse] = useState("");
   const [rating, setRating] = useState(null);
@@ -35,8 +36,6 @@ const CodeToText = () => {
     userRating: null,
   });
 
-  const navigate = useNavigate();
-
   const callCodeToText = async () => {
     try {
       const res = await fetch("/api/auth/codeToText", {
@@ -47,6 +46,7 @@ const CodeToText = () => {
         },
         credentials: "include",
       });
+
       const data = await res.json();
       setUserDetails(data);
       dispatch({ type: "USER", payload: true });
@@ -141,7 +141,7 @@ const CodeToText = () => {
   return (
     <Container>
       <br />
-      <div className="div-containerrow">
+      <div className="div-containerrow" data-testid="code-form">
         <h1> Generate Explanation for your code</h1>
         <h4> Enter code and display the result for it.</h4>
       </div>
@@ -165,10 +165,10 @@ const CodeToText = () => {
               </Form.Text>
             </Form.Group>
             <Button variant="primary" size="lg" type="submit">
-              Get AI Suggestions
+              Get Explanation
             </Button>
             <Form.Group>
-              <Form.Text>
+              <Form.Text data-testid="ai-response">
                 ....... await the response, might take a few seconds!
               </Form.Text>
             </Form.Group>
@@ -176,14 +176,15 @@ const CodeToText = () => {
         </Col>
         <Col className="col-md-6">
           <h5>Code Explanation</h5>
-          <Card style={{ height: "305px", overflow: "auto" }}>
+          <Card
+            style={{ height: "305px", overflow: "auto" }}
+            data-testid="card"
+          >
             <Card.Body className="card-body">
               <Card.Title>
                 <h5>Output</h5>
               </Card.Title>
-              <Card.Text>
-                <pre>{response}</pre>
-              </Card.Text>
+              <pre>{response}</pre>
             </Card.Body>
           </Card>
         </Col>
@@ -194,16 +195,22 @@ const CodeToText = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback} method="POST">
+            <Form
+              onSubmit={submitFeedback}
+              method="POST"
+              data-testid="feedback-form"
+            >
               <Form.Group className="mb-3">
                 <Form.Label>Enter your registered email</Form.Label>
                 <Form.Control
                   as="textarea"
                   value={userDetails.email}
                   placeholder="Email"
+                  id="feedback_form_email"
                   name="email"
                   className="feedback_form_email"
                   rows={1}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -216,6 +223,7 @@ const CodeToText = () => {
                   placeholder="Question"
                   className="feedback_form_question"
                   rows={5}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -229,6 +237,7 @@ const CodeToText = () => {
                   placeholder="Answer Generated"
                   className="feedback_form_answer"
                   rows={5}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -253,6 +262,7 @@ const CodeToText = () => {
                   {[1, 2, 3, 4, 5].map((ratingValue) => {
                     return (
                       <StarRating
+                        key={ratingValue}
                         ratingValue={ratingValue}
                         hover={hover}
                         rating={rating}
