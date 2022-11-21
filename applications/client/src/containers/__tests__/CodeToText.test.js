@@ -66,6 +66,17 @@ const setup = () => {
   };
 };
 
+test("response box should be empty before clicking button get explanation ", () => {
+  render(
+    <Router>
+      <CodeToText />
+    </Router>
+  );
+
+  const responseEle = screen.getByTestId("ai-response");
+  expect(responseEle).toBeInTheDocument();
+});
+
 // Integration test
 test("It should allow question/text to be inputted", () => {
   const { input } = setup();
@@ -101,15 +112,15 @@ test("does not trigger when required fields are empty for feedback form", async 
 });
 
 test("Star Rating selected or not selected", () => {
-  const rating=0;
-  const hover=0;
+  const rating = 0;
+  const hover = 0;
 
   const onMouseEnter = jest.fn();
   const onMouseLeave = jest.fn();
   const onClick = jest.fn();
-  const handleInput=jest.fn();
+  const handleInput = jest.fn();
 
-  const { container } = render (
+  const { container } = render(
     <div className="star">
       {[1, 2, 3, 4, 5].map((ratingValue) => {
         return (
@@ -126,20 +137,20 @@ test("Star Rating selected or not selected", () => {
         );
       })}
     </div>
-    )
-    
+  );
+
   const starNotSelected = container.querySelectorAll(".grey");
   expect(starNotSelected.length).toBe(5);
 });
 
 test("Star Rating selected", () => {
-  const rating=3;
-  const hover=3;
+  const rating = 3;
+  const hover = 3;
 
   const onMouseEnter = jest.fn();
   const onMouseLeave = jest.fn();
   const onClick = jest.fn();
-  const handleInput=jest.fn();
+  const handleInput = jest.fn();
 
   const { container } = render(
     <div>

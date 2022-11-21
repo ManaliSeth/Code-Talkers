@@ -8,7 +8,7 @@ import { UserContext } from "../../App";
 import { Form, Button } from "react-bootstrap";
 
 const Login = () => {
-  const { state, dispatch } = useContext(UserContext);
+  // const { state, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ const Login = () => {
       window.alert("Invalid Credentials");
       console.log("Invalid Credentials");
     } else {
-      dispatch({ type: "USER", payload: true });
+      // dispatch({ type: "USER", payload: true });
       window.alert("Login Successfull!");
       console.log("Login Successfull!");
       navigate("/", { replace: true });

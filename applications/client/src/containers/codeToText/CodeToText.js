@@ -46,6 +46,7 @@ const CodeToText = () => {
         },
         credentials: "include",
       });
+
       const data = await res.json();
       setUserDetails(data);
       dispatch({ type: "USER", payload: true });
@@ -167,7 +168,7 @@ const CodeToText = () => {
               Get Explanation
             </Button>
             <Form.Group>
-              <Form.Text>
+              <Form.Text data-testid="ai-response">
                 ....... await the response, might take a few seconds!
               </Form.Text>
             </Form.Group>
@@ -183,7 +184,7 @@ const CodeToText = () => {
               <Card.Title>
                 <h5>Output</h5>
               </Card.Title>
-                <pre>{response}</pre>
+              <pre>{response}</pre>
             </Card.Body>
           </Card>
         </Col>
