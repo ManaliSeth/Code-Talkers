@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,6 @@ const TextToCode = () => {
         },
         credentials: "include",
       });
-      // console.log(res);
       const data = await res.json();
 
       setUserDetails(data);
@@ -60,7 +59,6 @@ const TextToCode = () => {
         throw error;
       }
     } catch (error) {
-      console.log(error);
       navigate("/login");
     }
   };
@@ -76,11 +74,8 @@ const TextToCode = () => {
   const onFormSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Chosen programming language:", dropdownValue);
-
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj.question);
 
     //OPENAI
 
@@ -125,8 +120,6 @@ const TextToCode = () => {
 
     const { email, question, answer, feedback, userRating } = userData;
 
-    console.log(userData);
-
     const res = await fetch("/api/auth/TextToCode", {
       method: "POST",
       headers: {
@@ -143,7 +136,7 @@ const TextToCode = () => {
 
     const data = await res.json();
     if (!data) {
-      console.log("Feedback not sent");
+      alert("Feedback not sent");
     } else {
       alert("Feedback sent successfully");
       setUserData({
@@ -169,7 +162,7 @@ const TextToCode = () => {
       <br />
       <br />
 
-      <Form onSubmit={onFormSubmit}>
+      <Form onSubmit={onFormSubmit} data-testid="code-form">
         <Row>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="progLang">
@@ -180,10 +173,11 @@ const TextToCode = () => {
               onChange={handleDropdown}
               className="form-control"
               id="progLang"
+              data-testid='select'
             >
-              <option value="Python">Python</option>
-              <option value="Java">Java</option>
-              <option value="C++">C++</option>
+              <option name="language" value="Python" data-testid='select-option'>Python</option>
+              <option name="language" value="Java" data-testid='select-option'>Java</option>
+              <option name="language" value="C++" data-testid='select-option'>C++</option>
             </Form.Select>
           </Form.Group>
         </Row>
@@ -211,7 +205,7 @@ const TextToCode = () => {
             </Form.Group>
 
             <Button variant="primary" size="lg" type="submit">
-              Get AI Suggestions
+              Generate Code
             </Button>
 
             <Form.Group>
@@ -223,12 +217,9 @@ const TextToCode = () => {
 
           <Col className="col-md-6">
             <h5>Result: {dropdownValue} code</h5>
-            <Card style={{ height: "305px", overflow: "auto" }}>
+            <Card style={{ height: "305px", overflow: "auto" }} data-testid="card">
               <Card.Body>
-                <br />
-                <Card.Text>
-                  <pre>{response}</pre>
-                </Card.Text>
+                <pre>{response}</pre>
               </Card.Body>
             </Card>
           </Col>
@@ -241,8 +232,7 @@ const TextToCode = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback} method="POST">
-              {/* <Form.Group className="mb-3"> */}
+            <Form onSubmit={submitFeedback} method="POST" data-testid="feedback-form">
               <Form.Group className="mb-3">
                 <Form.Label>Enter your registered email</Form.Label>
                 <Form.Control
@@ -253,6 +243,7 @@ const TextToCode = () => {
                   name="email"
                   className="feedback_form_email"
                   rows={1}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -266,6 +257,7 @@ const TextToCode = () => {
                   placeholder="Question"
                   className="feedback_form_question"
                   rows={5}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -279,6 +271,7 @@ const TextToCode = () => {
                   placeholder="Answer Generated"
                   className="feedback_form_answer"
                   rows={5}
+                  readOnly={true}
                   required
                 />
               </Form.Group>
@@ -305,10 +298,10 @@ const TextToCode = () => {
                   {[1, 2, 3, 4, 5].map((ratingValue) => {
                     return (
                       <StarRating
+                        key={ratingValue}
                         ratingValue={ratingValue}
                         hover={hover}
                         rating={rating}
-                        userData={userData}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         onClick={onClick}
@@ -318,13 +311,11 @@ const TextToCode = () => {
                   })}
                 </div>
               </Form.Group>
-              {/* </Form.Group> */}
 
               <Button
                 variant="primary"
                 size="lg"
                 type="submit"
-                // onSubmit={submitFeedback}
               >
                 Submit Feedback
               </Button>

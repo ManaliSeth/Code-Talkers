@@ -49,9 +49,7 @@ const CodeToCode = () => {
         },
         credentials: "include",
       });
-      // console.log(res);
       const data = await res.json();
-      console.log(data);
       setUserDetails(data);
 
       dispatch({ type: "USER", payload: true });
@@ -61,7 +59,6 @@ const CodeToCode = () => {
         throw error;
       }
     } catch (error) {
-      console.log(error);
       navigate("/login");
     }
   };
@@ -81,12 +78,8 @@ const CodeToCode = () => {
   const onFormSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Chosen programming language to convert from:", dropdownValue1);
-    console.log("Chosen programming language to convert to:", dropdownValue2);
-
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj.question);
 
     //OPENAI
 
@@ -126,7 +119,6 @@ const CodeToCode = () => {
     const value = e.target.value;
 
     setUserData({ ...userData, [name]: value });
-    console.log("userData:", userData);
   };
 
   const submitFeedback = async (e) => {
@@ -134,7 +126,6 @@ const CodeToCode = () => {
 
     const { email, question, answer, feedback, userRating } = userData;
 
-    console.log("hello from submit feedback");
     const res = await fetch("/api/auth/CodeToCode", {
       method: "POST",
       headers: {
@@ -151,7 +142,7 @@ const CodeToCode = () => {
 
     const data = await res.json();
     if (!data) {
-      console.log("Feedback not sent");
+      alert('Feedback not sent')
     } else {
       alert("Feedback sent successfully");
       setUserData({
@@ -177,7 +168,7 @@ const CodeToCode = () => {
       <br />
       <br />
 
-      <Form onSubmit={onFormSubmit}>
+      <Form onSubmit={onFormSubmit} data-testid="code-form">
         <Row>
           <Col className="col-md-6">
             <Form.Group className="mb-3">
@@ -189,6 +180,7 @@ const CodeToCode = () => {
                 onChange={handleDropdown1}
                 className="form-control"
                 id="progLang1"
+                data-testid="dropdown1"
               >
                 <option value="Python">Python</option>
                 <option value="Java">Java</option>
@@ -211,6 +203,7 @@ const CodeToCode = () => {
                 onChange={handleDropdown2}
                 className="form-control"
                 id="progLang2"
+                data-testid="dropdown2"
               >
                 <option value="Java">Java</option>
                 <option value="Python">Python</option>
@@ -243,7 +236,7 @@ const CodeToCode = () => {
             </Form.Group>
 
             <Button variant="primary" size="lg" type="submit">
-              Get AI Suggestions
+              Translate Code
             </Button>
 
             <Form.Group>
@@ -255,11 +248,9 @@ const CodeToCode = () => {
 
           <Col className="col-md-6">
             <h5>Result: {dropdownValue2} code</h5>
-            <Card style={{ height: "305px", overflow: "auto" }}>
+            <Card style={{ height: "305px", overflow: "auto" }} data-testid="card">
               <Card.Body>
-                <Card.Text>
                   <pre>{response}</pre>
-                </Card.Text>
               </Card.Body>
             </Card>
           </Col>
@@ -271,7 +262,7 @@ const CodeToCode = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback}>
+            <Form onSubmit={submitFeedback} data-testid="feedback-form">
               <Form.Group method="POST" className="mb-3">
                 <Form.Group className="mb-3">
                   <Form.Label>Enter your registered email</Form.Label>
@@ -283,6 +274,7 @@ const CodeToCode = () => {
                     name="email"
                     className="feedback_form_email"
                     rows={1}
+                    readOnly={true}
                     required
                   />
                 </Form.Group>
@@ -296,6 +288,7 @@ const CodeToCode = () => {
                     placeholder="Question"
                     className="feedback_form_question"
                     rows={5}
+                    readOnly={true}
                     required
                   />
                 </Form.Group>
@@ -309,6 +302,7 @@ const CodeToCode = () => {
                     placeholder="Answer Generated"
                     className="feedback_form_answer"
                     rows={5}
+                    readOnly={true}
                     required
                   />
                 </Form.Group>
@@ -335,6 +329,7 @@ const CodeToCode = () => {
                     {[1, 2, 3, 4, 5].map((ratingValue) => {
                       return (
                         <StarRating
+                          key={ratingValue}
                           ratingValue={ratingValue}
                           hover={hover}
                           rating={rating}
