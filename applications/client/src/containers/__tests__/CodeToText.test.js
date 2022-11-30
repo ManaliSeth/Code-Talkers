@@ -3,61 +3,93 @@ import userEvent from "@testing-library/user-event";
 import CodeToText from "../codeToText/CodeToText";
 import { BrowserRouter as Router } from "react-router-dom";
 import StarRating from "../../components/StarRating";
-
+import { UserContext } from "../../App";
 test("renders code to text page", async () => {
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
+
   const codeElement = screen.getByTestId("code-form");
   expect(codeElement).toBeInTheDocument();
 });
 
 test("renders text", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
   const loginElement = screen.getByText(/Generate Explanation for your code/i);
   expect(loginElement).toBeInTheDocument();
 });
 
 test("render Feedback Form", () => {
+  const state = {
+    isLoggedIn: true,
+  };
+
   const { getByTestId } = render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
   const feedbackForm = getByTestId("feedback-form");
   expect(feedbackForm).toBeDefined();
 });
 
 test("render Card", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   const { getByTestId } = render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
   const card = getByTestId("card");
   expect(card).toBeDefined();
 });
 
 test("should give input box", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
   screen.getAllByPlaceholderText("Enter your code");
 });
 
 const setup = () => {
+  const state = {
+    isLoggedIn: true,
+  };
   const utils = render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
   const input = utils.getByPlaceholderText("Enter your code");
   return {
@@ -67,10 +99,15 @@ const setup = () => {
 };
 
 test("response box should be empty before clicking button get explanation ", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
 
   const responseEle = screen.getByTestId("ai-response");
@@ -89,10 +126,15 @@ test("It should allow question/text to be inputted", () => {
 
 test("does not trigger when required fields are empty for code form", async () => {
   const onSubmit = jest.fn();
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
   const submitButton = screen.getByText("Get Explanation");
   await waitFor(() => userEvent.click(submitButton));
@@ -101,10 +143,15 @@ test("does not trigger when required fields are empty for code form", async () =
 
 test("does not trigger when required fields are empty for feedback form", async () => {
   const onSubmit = jest.fn();
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <CodeToText />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <CodeToText />
+      </Router>
+    </UserContext.Provider>
   );
   const submitButton = screen.getByText("Submit Feedback");
   await waitFor(() => userEvent.click(submitButton));
