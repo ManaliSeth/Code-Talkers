@@ -1,26 +1,37 @@
-import { render, fireEvent, screen, waitFor} from "@testing-library/react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TextToCode from "../textToCode/TextToCode";
 import { BrowserRouter as Router } from "react-router-dom";
 import StarRating from "../../components/StarRating";
-import '@testing-library/jest-dom';
-import React, { useState } from 'react';
+import "@testing-library/jest-dom";
+import React from "react";
+import { UserContext } from "../../App";
 
 test("should display the correct number of options", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   expect(screen.getAllByRole("option").length).toBe(3);
 });
 
 // Integration Test
 test("should allow user to change programming langage", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   userEvent.selectOptions(
     screen.getByRole("combobox"),
@@ -38,49 +49,74 @@ test("should allow user to change programming langage", () => {
 });
 
 test("render Code Form", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   const { getByTestId } = render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   const codeForm = getByTestId("code-form");
   expect(codeForm).toBeDefined();
 });
 
 test("render Card", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   const { getByTestId } = render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   const card = getByTestId("card");
   expect(card).toBeDefined();
 });
 
 test("render Feedback Form", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   const { getByTestId } = render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   const feedbackForm = getByTestId("feedback-form");
   expect(feedbackForm).toBeDefined();
 });
 
 test("should give input box", () => {
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   screen.getAllByPlaceholderText("Enter your question");
 });
 
 const setup = () => {
+  const state = {
+    isLoggedIn: true,
+  };
   const utils = render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   const input = utils.getByPlaceholderText("Enter your question");
   return {
@@ -101,10 +137,15 @@ test("It should allow question/text to be inputted", () => {
 
 test("does not trigger when required fields are empty for code form", async () => {
   const onSubmit = jest.fn();
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   const submitButton = screen.getByText("Generate Code");
   await waitFor(() => userEvent.click(submitButton));
@@ -113,10 +154,15 @@ test("does not trigger when required fields are empty for code form", async () =
 
 test("does not trigger when required fields are empty for feedback form", async () => {
   const onSubmit = jest.fn();
+  const state = {
+    isLoggedIn: true,
+  };
   render(
-    <Router>
-      <TextToCode />
-    </Router>
+    <UserContext.Provider value={{ state }}>
+      <Router>
+        <TextToCode />
+      </Router>
+    </UserContext.Provider>
   );
   const submitButton = screen.getByText("Submit Feedback");
   await waitFor(() => userEvent.click(submitButton));
@@ -124,15 +170,15 @@ test("does not trigger when required fields are empty for feedback form", async 
 });
 
 test("Star Rating selected or not selected", () => {
-  const rating=0;
-  const hover=0;
+  const rating = 0;
+  const hover = 0;
 
   const onMouseEnter = jest.fn();
   const onMouseLeave = jest.fn();
   const onClick = jest.fn();
-  const handleInput=jest.fn();
+  const handleInput = jest.fn();
 
-  const { container } = render (
+  const { container } = render(
     <div className="star">
       {[1, 2, 3, 4, 5].map((ratingValue) => {
         return (
@@ -149,20 +195,20 @@ test("Star Rating selected or not selected", () => {
         );
       })}
     </div>
-    )
-    
+  );
+
   const starNotSelected = container.querySelectorAll(".grey");
   expect(starNotSelected.length).toBe(5);
 });
 
 test("Star Rating selected", () => {
-  const rating=3;
-  const hover=3;
+  const rating = 3;
+  const hover = 3;
 
   const onMouseEnter = jest.fn();
   const onMouseLeave = jest.fn();
   const onClick = jest.fn();
-  const handleInput=jest.fn();
+  const handleInput = jest.fn();
 
   const { container } = render(
     <div>
