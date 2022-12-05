@@ -35,7 +35,3 @@ jobs:
       - name: Run Tests
         run: npm test
         working-directory: ./applications/client
-
-      - name: Upload artifact in order to deploy
-        uses: actions/upload-artifact@v3
-        working-directory: ./applications/client
