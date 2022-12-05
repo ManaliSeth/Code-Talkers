@@ -32,10 +32,6 @@ jobs:
         run: npm i
         working-directory: ./applications/client
 
-      - name: Build Project
-        run: npm run build --if-present
-        working-directory: ./applications/client
-
       - name: Run Tests
         run: npm test
         working-directory: ./applications/client
