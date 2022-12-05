@@ -1,4 +1,4 @@
-name: CI workflow
+name: CI workflow _ 1
 
 on:
   push:
@@ -27,6 +27,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          
+      - name: Path
+        run: cd applications/client
 
       - name: Install NPM Dependencies
         run: npm i
