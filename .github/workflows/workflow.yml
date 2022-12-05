@@ -5,15 +5,11 @@ on:
     branches:
       - master
       - develop
-    paths:
-      - 'applications/client/**'
 
   pull_request:
     branches:
       - master
       - develop
-    paths:
-      - 'applications/client/**'
 
 jobs:
   build:
@@ -21,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x]
 
     steps:
       - name: Checkout Code
@@ -34,12 +30,8 @@ jobs:
 
       - name: Install NPM Dependencies
         run: npm i
-
-      - name: Build Project
-        run: npm run build --if-present
+        working-directory: ./applications/client
 
       - name: Run Tests
         run: npm test
-
-      - name: Upload artifact in order to deploy
-        uses: actions/upload-artifact@v3
+        working-directory: ./applications/client
