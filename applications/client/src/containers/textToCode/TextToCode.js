@@ -38,6 +38,7 @@ const TextToCode = () => {
 
   const navigate = useNavigate();
 
+//  fetching user data
   const callTextToCode = async () => {
     try {
       const res = await fetch("/api/auth/textToCode", {
@@ -71,6 +72,7 @@ const TextToCode = () => {
     setDropdownValue(event.target.value);
   };
 
+  // user input in form and output with OpenAI
   const onFormSubmit = (e) => {
     e.preventDefault();
 
@@ -115,6 +117,7 @@ const TextToCode = () => {
     setUserData({ ...userData, [name]: value });
   };
 
+  // user feedback form
   const submitFeedback = async (e) => {
     e.preventDefault();
 
