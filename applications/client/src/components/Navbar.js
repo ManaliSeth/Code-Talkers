@@ -8,7 +8,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 const NavbarComp = () => {
   const { state, dispatch } = useContext(UserContext);
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState("");
 
   const navigate = useNavigate();
 
@@ -25,7 +25,6 @@ const NavbarComp = () => {
       const data = await res.json();
       setUserType(data.userType);
       dispatch({ type: "USER", payload: true });
-      console.log("UserType:", userType);
 
       if (!res.status === 200) {
         const error = new Error(res.error);
@@ -37,12 +36,11 @@ const NavbarComp = () => {
     }
   };
 
-  useEffect(() => {
-  }, [state]);
+  useEffect(() => {}, [state]);
 
   useEffect(() => {
     fetchUserType();
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -72,15 +70,15 @@ const NavbarComp = () => {
               {" "}
               Home{" "}
             </Link>
-            {state && userType==='Professor' && (
-            <Link
-              to="/feedback"
-              className="navbar-text"
-              style={{ textDecoration: "none" }}
-            >
-              {" "}
-              Feedback{" "}
-            </Link>
+            {state && userType === "Professor" && (
+              <Link
+                to="/feedback"
+                className="navbar-text"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                Feedback{" "}
+              </Link>
             )}
 
             <Link
