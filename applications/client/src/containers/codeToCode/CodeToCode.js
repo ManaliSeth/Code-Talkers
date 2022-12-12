@@ -102,7 +102,7 @@ const CodeToCode = () => {
         stop: ["###"],
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setResponse(response.data.choices[0].text);
         setDropdownValue1(dropdownValue1);
         setDropdownValue2(dropdownValue2);
@@ -142,7 +142,7 @@ const CodeToCode = () => {
 
     const data = await res.json();
     if (!data) {
-      alert('Feedback not sent')
+      alert("Feedback not sent");
     } else {
       alert("Feedback sent successfully");
       setUserData({
@@ -248,9 +248,12 @@ const CodeToCode = () => {
 
           <Col className="col-md-6">
             <h5>Result: {dropdownValue2} code</h5>
-            <Card style={{ height: "305px", overflow: "auto" }} data-testid="card">
+            <Card
+              style={{ height: "305px", overflow: "auto" }}
+              data-testid="card"
+            >
               <Card.Body>
-                  <pre>{response}</pre>
+                <pre>{response}</pre>
               </Card.Body>
             </Card>
           </Col>
