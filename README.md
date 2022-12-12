@@ -1,6 +1,6 @@
 # CSC890-fall22-03-team04 Repository
 
-## Application URL: http://13.57.40.53:3000/
+## Application URL: http://13.57.184.244:3000/
 
 ## Please do the following steps to run the application locally
 
