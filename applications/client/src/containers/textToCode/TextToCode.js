@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ const TextToCode = () => {
 
   const navigate = useNavigate();
 
-//  fetching user data
+  //  fetching user data
   const callTextToCode = async () => {
     try {
       const res = await fetch("/api/auth/textToCode", {
@@ -89,7 +89,7 @@ const TextToCode = () => {
 
     openai
       .createCompletion({
-        model: "code-davinci-002",
+        model: "text-davinci-003",
         prompt: `\n\n\\"\\"\\"\nWrite a ${dropdownValue} code to ${formDataObj.question}:\n`,
         temperature: 0.1,
         max_tokens: 256,
@@ -176,11 +176,21 @@ const TextToCode = () => {
               onChange={handleDropdown}
               className="form-control"
               id="progLang"
-              data-testid='select'
+              data-testid="select"
             >
-              <option name="language" value="Python" data-testid='select-option'>Python</option>
-              <option name="language" value="Java" data-testid='select-option'>Java</option>
-              <option name="language" value="C++" data-testid='select-option'>C++</option>
+              <option
+                name="language"
+                value="Python"
+                data-testid="select-option"
+              >
+                Python
+              </option>
+              <option name="language" value="Java" data-testid="select-option">
+                Java
+              </option>
+              <option name="language" value="C++" data-testid="select-option">
+                C++
+              </option>
             </Form.Select>
           </Form.Group>
         </Row>
@@ -220,7 +230,10 @@ const TextToCode = () => {
 
           <Col className="col-md-6">
             <h5>Result: {dropdownValue} code</h5>
-            <Card style={{ height: "305px", overflow: "auto" }} data-testid="card">
+            <Card
+              style={{ height: "305px", overflow: "auto" }}
+              data-testid="card"
+            >
               <Card.Body>
                 <pre>{response}</pre>
               </Card.Body>
@@ -235,7 +248,11 @@ const TextToCode = () => {
       <Row>
         <div className="mb-3">
           <div className="form">
-            <Form onSubmit={submitFeedback} method="POST" data-testid="feedback-form">
+            <Form
+              onSubmit={submitFeedback}
+              method="POST"
+              data-testid="feedback-form"
+            >
               <Form.Group className="mb-3">
                 <Form.Label>Enter your registered email</Form.Label>
                 <Form.Control
@@ -315,11 +332,7 @@ const TextToCode = () => {
                 </div>
               </Form.Group>
 
-              <Button
-                variant="primary"
-                size="lg"
-                type="submit"
-              >
+              <Button variant="primary" size="lg" type="submit">
                 Submit Feedback
               </Button>
             </Form>

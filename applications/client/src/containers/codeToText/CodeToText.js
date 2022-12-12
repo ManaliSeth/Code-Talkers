@@ -77,7 +77,7 @@ const CodeToText = () => {
 
     openai
       .createCompletion({
-        model: "code-davinci-002",
+        model: "text-davinci-003",
         prompt: `${formDataObj.question}\n\n\\"\\"\\"\nHere's what the above class is doing:\n`,
         temperature: 0.8,
         max_tokens: 256,
